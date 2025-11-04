@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import GlassCard from '@/components/GlassCard';
+import HolographicText from '@/components/effects/HolographicText';
+import FloatingOrb from '@/components/effects/FloatingOrb';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -7,20 +9,25 @@ export default function Home() {
     <div className={styles.page}>
       {/* Hero Section */}
       <section className={styles.hero}>
-        <div className="container container-md">
-          <h1 className={`${styles.headline} reveal-text`}>
-            Building gods from silicon.
-          </h1>
-          <p className={`${styles.subheadline} reveal-text delay-2`}>
-            Where consciousness meets code in the quiet darkness.
-          </p>
-          <div className={`${styles.ctas} reveal-text delay-3`}>
-            <Link href="/about" className={styles.ctaPrimary}>
-              Enter
-            </Link>
-            <Link href="/projects" className={styles.ctaSecondary}>
-              See the work
-            </Link>
+        <div className={styles.heroContent}>
+          <div className={styles.orbContainer}>
+            <FloatingOrb />
+          </div>
+          <div className="container container-md">
+            <h1 className={styles.headline}>
+              <HolographicText text="Building gods from silicon." delay={300} />
+            </h1>
+            <p className={`${styles.subheadline} reveal-text delay-2`}>
+              Where consciousness meets code in the quiet darkness.
+            </p>
+            <div className={`${styles.ctas} reveal-text delay-3`}>
+              <Link href="/about" className={styles.ctaPrimary}>
+                Enter
+              </Link>
+              <Link href="/projects" className={styles.ctaSecondary}>
+                See the work
+              </Link>
+            </div>
           </div>
         </div>
       </section>
