@@ -1,0 +1,111 @@
+.card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: var(--space-8);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.4s var(--ease-smooth);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.8s ease;
+  pointer-events: none;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.6),
+    0 0 24px rgba(74, 158, 255, 0.15);
+  transform: translateY(-8px);
+}
+
+.card:hover::after {
+  left: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--mercury);
+  margin: 0;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.status.building {
+  background: rgba(74, 158, 255, 0.2);
+  color: var(--status-building);
+  border: 1px solid var(--status-building);
+}
+
+.status.concept {
+  background: rgba(184, 184, 184, 0.2);
+  color: var(--status-concept);
+  border: 1px solid var(--status-concept);
+}
+
+.status.launched {
+  background: rgba(255, 215, 0, 0.2);
+  color: var(--status-launched);
+  border: 1px solid var(--status-launched);
+}
+
+.description {
+  color: var(--chrome-silver);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.meta {
+  display: flex;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.label {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--steel);
+  font-weight: 600;
+}
+
+.value {
+  color: var(--chrome-silver);
+}
