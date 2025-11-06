@@ -1,0 +1,166 @@
+.ripple {
+  position: fixed;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  border: 2px solid var(--chrome-silver);
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  animation: rippleExpand 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes rippleExpand {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+
+.message {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  color: var(--chrome-silver);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--text-sm);
+  text-shadow: 0 0 10px rgba(217, 217, 217, 0.5);
+  pointer-events: none;
+  z-index: 9999;
+  animation: messageFadeIn 4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  white-space: nowrap;
+}
+
+@keyframes messageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(-10px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(-30px);
+  }
+}
+
+/* Konami code easter egg */
+.konami {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  pointer-events: none;
+  animation: konamiFade 5s ease-in-out forwards;
+}
+
+.konamiContent {
+  text-align: center;
+  color: var(--mercury);
+  position: relative;
+}
+
+.konamiContent p {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-4);
+  text-shadow: 0 0 20px rgba(217, 217, 217, 0.8);
+}
+
+.konamiText {
+  font-size: var(--text-lg) !important;
+  font-style: italic;
+  color: var(--chrome-silver);
+}
+
+.konamiGrid {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.konamiParticle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--chrome-silver);
+  border-radius: 50%;
+  animation: konamiParticleFloat 3s ease-in-out infinite;
+}
+
+.konamiParticle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+.konamiParticle:nth-child(2) { left: 20%; top: 80%; animation-delay: 0.2s; }
+.konamiParticle:nth-child(3) { left: 40%; top: 10%; animation-delay: 0.4s; }
+.konamiParticle:nth-child(4) { left: 60%; top: 70%; animation-delay: 0.6s; }
+.konamiParticle:nth-child(5) { left: 80%; top: 30%; animation-delay: 0.8s; }
+.konamiParticle:nth-child(6) { left: 30%; top: 50%; animation-delay: 1s; }
+.konamiParticle:nth-child(7) { left: 70%; top: 90%; animation-delay: 1.2s; }
+.konamiParticle:nth-child(8) { left: 50%; top: 40%; animation-delay: 1.4s; }
+.konamiParticle:nth-child(9) { left: 90%; top: 60%; animation-delay: 1.6s; }
+.konamiParticle:nth-child(10) { left: 15%; top: 65%; animation-delay: 1.8s; }
+.konamiParticle:nth-child(11) { left: 25%; top: 35%; animation-delay: 2s; }
+.konamiParticle:nth-child(12) { left: 45%; top: 75%; animation-delay: 2.2s; }
+.konamiParticle:nth-child(13) { left: 65%; top: 15%; animation-delay: 2.4s; }
+.konamiParticle:nth-child(14) { left: 85%; top: 85%; animation-delay: 2.6s; }
+.konamiParticle:nth-child(15) { left: 35%; top: 95%; animation-delay: 2.8s; }
+.konamiParticle:nth-child(16) { left: 55%; top: 25%; animation-delay: 3s; }
+.konamiParticle:nth-child(17) { left: 75%; top: 55%; animation-delay: 3.2s; }
+.konamiParticle:nth-child(18) { left: 95%; top: 45%; animation-delay: 3.4s; }
+.konamiParticle:nth-child(19) { left: 5%; top: 75%; animation-delay: 3.6s; }
+.konamiParticle:nth-child(20) { left: 50%; top: 5%; animation-delay: 3.8s; }
+
+@keyframes konamiParticleFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.5);
+    opacity: 0.8;
+  }
+}
+
+@keyframes konamiFade {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ripple,
+  .message,
+  .konami,
+  .konamiParticle {
+    animation: none !important;
+    opacity: 0;
+  }
+}
