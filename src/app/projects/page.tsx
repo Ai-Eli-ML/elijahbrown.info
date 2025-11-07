@@ -94,12 +94,12 @@ export default function ProjectsPage() {
               small talk, I'm probably not your person.
             </p>
             <div className={styles.contact}>
-              <a href="mailto:elijah@advancingtech.co" className={styles.contactLink}>
+              <a href="mailto:admin@elijahbrown.info" className={styles.contactLink}>
                 Email
               </a>
               <span className={styles.separator}>·</span>
               <a
-                href="https://twitter.com/elijahbrown"
+                href="https://x.com/x_0___0_x?s=21"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.contactLink}
@@ -108,7 +108,7 @@ export default function ProjectsPage() {
               </a>
               <span className={styles.separator}>·</span>
               <a
-                href="https://github.com/elijahbrown"
+                href="https://github.com/ai-eli-ml"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.contactLink}
