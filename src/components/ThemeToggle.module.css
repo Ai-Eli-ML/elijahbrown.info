@@ -1,0 +1,69 @@
+.toggle {
+  position: fixed;
+  top: 80px;
+  right: 140px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: var(--steel);
+  z-index: 1000;
+  opacity: 0.6;
+  transition: all 0.3s var(--ease-smooth);
+  cursor: pointer;
+}
+
+.toggle:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.toggle:active {
+  transform: translateY(0);
+}
+
+.icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--chrome-silver);
+}
+
+/* Theme-specific animations */
+:global(.theme-cyberpunk) .toggle {
+  animation: cyberpunkPulse 2s ease-in-out infinite;
+}
+
+@keyframes cyberpunkPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .toggle {
+    top: auto;
+    bottom: 24px;
+    right: 24px;
+  }
+
+  .label {
+    display: none;
+  }
+}

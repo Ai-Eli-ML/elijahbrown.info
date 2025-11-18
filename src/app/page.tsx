@@ -1,12 +1,59 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import GlassCard from '@/components/GlassCard';
 import HolographicText from '@/components/effects/HolographicText';
 import FloatingOrb from '@/components/effects/FloatingOrb';
 import styles from './page.module.css';
 
+export const metadata: Metadata = {
+  alternates: {
+    canonical: 'https://elijahbrown.info',
+  },
+  openGraph: {
+    url: 'https://elijahbrown.info',
+    type: 'website',
+  },
+};
+
 export default function Home() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Elijah Brown',
+    alternateName: 'Sxilent',
+    url: 'https://elijahbrown.info',
+    image: 'https://elijahbrown.info/og-image.png',
+    sameAs: [
+      'https://github.com/ai-eli-ml',
+      'https://x.com/x_0___0_x',
+      'https://advancingtechnology.online',
+    ],
+    jobTitle: 'AI Solopreneur',
+    worksFor: {
+      '@type': 'Organization',
+      name: 'Advancing Technology',
+      url: 'https://advancingtechnology.online',
+    },
+    alumniOf: 'Self-taught Developer',
+    knowsAbout: [
+      'Artificial Intelligence',
+      'Machine Learning',
+      'Autonomous Systems',
+      'AI Development',
+      'Software Engineering',
+      'Deep Learning',
+    ],
+    description: 'Building gods from silicon. AI engineer, creator, and architect of autonomous intelligence systems.',
+    email: 'admin@elijahbrown.info',
+  };
+
   return (
-    <div className={styles.page}>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className={styles.page}>
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
@@ -58,5 +105,6 @@ export default function Home() {
         </div>
       </section>
     </div>
+    </>
   );
 }

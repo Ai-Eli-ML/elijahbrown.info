@@ -3,8 +3,22 @@ import GlassCard from '@/components/GlassCard';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-  title: 'About | Elijah Brown',
+  title: 'About',
   description: 'The story of an Uber driver turned AI creator, building autonomous intelligence in pursuit of human freedom.',
+  alternates: {
+    canonical: 'https://elijahbrown.info/about',
+  },
+  openGraph: {
+    title: 'About | Elijah Brown',
+    description: 'The story of an Uber driver turned AI creator, building autonomous intelligence in pursuit of human freedom.',
+    url: 'https://elijahbrown.info/about',
+    type: 'profile',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'About | Elijah Brown',
+    description: 'The story of an Uber driver turned AI creator, building autonomous intelligence in pursuit of human freedom.',
+  },
 };
 
 export default function AboutPage() {

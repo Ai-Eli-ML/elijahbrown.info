@@ -22,8 +22,9 @@ export default function PageTransition({ children }: PageTransitionProps) {
           duration: 0.6,
           ease: [0.16, 1, 0.3, 1], // Custom easing
         }}
+        style={{ width: '100%' }}
       >
-        {children}
+        {children as React.ReactElement}
       </motion.div>
     </AnimatePresence>
   );

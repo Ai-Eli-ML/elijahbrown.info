@@ -1,0 +1,93 @@
+.toc {
+  position: sticky;
+  top: 6rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  backdrop-filter: blur(10px);
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 1rem 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item {
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 2px solid transparent;
+  padding-left: 0.75rem;
+}
+
+.link:hover {
+  color: rgba(255, 255, 255, 0.9);
+  border-left-color: rgba(255, 255, 255, 0.3);
+}
+
+.item.active .link {
+  color: var(--primary, #00ff88);
+  border-left-color: var(--primary, #00ff88);
+  font-weight: 500;
+}
+
+.level3 .link {
+  padding-left: 1.5rem;
+  font-size: 0.8125rem;
+}
+
+/* Scrollbar styling */
+.toc::-webkit-scrollbar {
+  width: 4px;
+}
+
+.toc::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+}
+
+.toc::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+.toc::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 1280px) {
+  .toc {
+    position: relative;
+    top: 0;
+    margin-bottom: 2rem;
+  }
+}

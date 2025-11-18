@@ -275,3 +275,98 @@ code, pre {
     padding: 0 var(--space-4);
   }
 }
+
+/* ==========================================
+   SYNTAX HIGHLIGHTING - Monokai Dark Theme
+   ========================================== */
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1.5em;
+  background: rgba(0, 0, 0, 0.4);
+  color: #f8f8f2;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #75715e;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-addition {
+  color: #f92672;
+}
+
+.hljs-number,
+.hljs-string,
+.hljs-meta .hljs-string,
+.hljs-literal,
+.hljs-doctag,
+.hljs-regexp {
+  color: #e6db74;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #a6e22e;
+}
+
+.hljs-attribute,
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-class .hljs-title,
+.hljs-type {
+  color: #66d9ef;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-subst,
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-link {
+  color: #fd971f;
+}
+
+.hljs-built_in,
+.hljs-deletion {
+  color: #e74c3c;
+}
+
+.hljs-formula {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+/* Code block enhancements */
+pre code.hljs {
+  padding: 0;
+  background: transparent;
+}
+
+code:not(.hljs) {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+  color: #e6db74;
+}

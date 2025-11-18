@@ -1,0 +1,124 @@
+.navigation {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  text-decoration: none;
+  color: var(--foreground);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 204, 255, 0.05));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.link:hover::before {
+  opacity: 1;
+}
+
+.link:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.prev {
+  text-align: left;
+}
+
+.next {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+}
+
+.arrow {
+  position: absolute;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.prev .arrow {
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.next .arrow {
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.link:hover .arrow {
+  color: rgba(0, 255, 136, 0.3);
+}
+
+.prev:hover .arrow {
+  transform: translateY(-50%) translateX(-4px);
+}
+
+.next:hover .arrow {
+  transform: translateY(-50%) translateX(4px);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .next {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .next .arrow {
+    left: 1rem;
+    right: auto;
+  }
+
+  .next:hover .arrow {
+    transform: translateY(-50%) translateX(-4px);
+  }
+}

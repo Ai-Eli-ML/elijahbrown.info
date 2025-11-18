@@ -1,0 +1,15 @@
+{
+  "available": true,
+  "premium": false,
+  "checkResult": "Domain Availability Check:\n\n  test-integration-check.com: ✅ AVAILABLE (~$10-15/year)",
+  "pricing": {
+    "domainCost": 10,
+    "domainPrice": 50,
+    "whoisPrivacy": 15,
+    "dnsManagement": 25,
+    "sslSetup": 50,
+    "totalCost": 10,
+    "totalPrice": 140,
+    "totalProfit": 130
+  }
+}

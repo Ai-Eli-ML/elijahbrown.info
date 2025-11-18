@@ -4,6 +4,14 @@ import matter from 'gray-matter';
 
 const postsDirectory = path.join(process.cwd(), 'content/blog');
 
+// Calculate reading time based on word count (average 200 words per minute)
+function calculateReadingTime(content: string): number {
+  const wordsPerMinute = 200;
+  const wordCount = content.trim().split(/\s+/).length;
+  const readingTime = Math.ceil(wordCount / wordsPerMinute);
+  return readingTime;
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -11,6 +19,7 @@ export interface BlogPost {
   description: string;
   content: string;
   tags?: string[];
+  readingTime?: number; // in minutes
 }
 
 export function getAllPosts(): BlogPost[] {
@@ -35,6 +44,7 @@ export function getAllPosts(): BlogPost[] {
         description: data.description || '',
         content,
         tags: data.tags || [],
+        readingTime: calculateReadingTime(content),
       };
     });
 
@@ -61,6 +71,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
         description: data.description || '',
         content,
         tags: data.tags || [],
+        readingTime: calculateReadingTime(content),
       };
     }
 
@@ -74,9 +85,24 @@ export function getPostBySlug(slug: string): BlogPost | null {
       description: data.description || '',
       content,
       tags: data.tags || [],
+      readingTime: calculateReadingTime(content),
     };
   } catch (error) {
     console.error(`Error reading post ${slug}:`, error);
     return null;
   }
+}
+
+export function getAdjacentPosts(slug: string): { prev: BlogPost | null; next: BlogPost | null } {
+  const allPosts = getAllPosts();
+  const currentIndex = allPosts.findIndex(post => post.slug === slug);
+
+  if (currentIndex === -1) {
+    return { prev: null, next: null };
+  }
+
+  return {
+    prev: currentIndex > 0 ? allPosts[currentIndex - 1] : null,
+    next: currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null,
+  };
 }

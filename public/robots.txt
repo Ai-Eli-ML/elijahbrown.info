@@ -1,0 +1,15 @@
+# robots.txt for elijahbrown.info
+# AI Solopreneur | Building gods from silicon
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://elijahbrown.info/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow admin/private areas (none currently, but prepared for future)
+# Disallow: /api/
+# Disallow: /admin/

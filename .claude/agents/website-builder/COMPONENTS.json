@@ -1,0 +1,270 @@
+{
+  "phase": 3,
+  "name": "Effect Agents",
+  "status": "complete",
+  "timestamp": "2025-11-06",
+  "agents": [
+    {
+      "name": "threejs-agent",
+      "file": "threejs-agent.js",
+      "size": "16KB",
+      "components": [
+        {
+          "name": "FloatingOrb",
+          "file": "FloatingOrb.tsx",
+          "category": "3d",
+          "description": "A mesmerizing 3D floating orb with shader-based glow effects and smooth animations",
+          "features": [
+            "Custom GLSL vertex/fragment shaders",
+            "Fresnel glow effect",
+            "Sin wave floating animation",
+            "Responsive canvas",
+            "Configurable size, color, speed"
+          ],
+          "dependencies": ["three", "@types/three"],
+          "props": {
+            "size": "small | medium | large",
+            "color": "string (hex color)",
+            "speed": "number",
+            "className": "string"
+          }
+        },
+        {
+          "name": "ParticleField3D",
+          "file": "ParticleField3D.tsx",
+          "category": "3d",
+          "description": "A stunning 3D particle field with thousands of animated particles creating an immersive depth effect",
+          "features": [
+            "5000+ particles",
+            "Physics-based motion",
+            "Additive blending",
+            "Boundary wrapping",
+            "Rotation animation"
+          ],
+          "dependencies": ["three", "@types/three"],
+          "props": {
+            "count": "number (default: 5000)",
+            "color": "string (hex color)",
+            "speed": "number",
+            "className": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shader-agent",
+      "file": "shader-agent.js",
+      "size": "16KB",
+      "shaderLibrary": [
+        {
+          "name": "liquid-chrome",
+          "description": "Flowing metallic chrome effect using Fractal Brownian Motion",
+          "techniques": ["FBM", "Smooth noise", "Multi-layer flow"]
+        },
+        {
+          "name": "void-waves",
+          "description": "Dark undulating void patterns with Simplex noise",
+          "techniques": ["Simplex noise", "Wave layering", "Dark palette"]
+        },
+        {
+          "name": "holographic",
+          "description": "Rainbow holographic shimmer with interference patterns",
+          "techniques": ["HSV to RGB conversion", "Interference patterns", "Fresnel effect"]
+        }
+      ],
+      "components": [
+        {
+          "name": "LiquidChromeBackground",
+          "file": "LiquidChromeBackground.tsx",
+          "category": "shader",
+          "shader": "liquid-chrome.glsl",
+          "description": "A mesmerizing flowing chrome shader with organic metallic patterns and smooth animations",
+          "features": [
+            "Fractal Brownian Motion (5 octaves)",
+            "Multi-layer flow animation",
+            "Metallic shimmer effect",
+            "Gradient color mixing"
+          ],
+          "dependencies": ["three", "@types/three"],
+          "props": {
+            "speed": "number",
+            "className": "string"
+          }
+        },
+        {
+          "name": "VoidWavesBackground",
+          "file": "VoidWavesBackground.tsx",
+          "category": "shader",
+          "shader": "void-waves.glsl",
+          "description": "A dark, undulating void shader creating deep atmospheric wave patterns perfect for mysterious backgrounds",
+          "features": [
+            "Simplex noise waves",
+            "6-layer wave composition",
+            "Dark purple-black palette",
+            "Edge highlights"
+          ],
+          "dependencies": ["three", "@types/three"],
+          "props": {
+            "speed": "number",
+            "className": "string"
+          }
+        },
+        {
+          "name": "HolographicBackground",
+          "file": "HolographicBackground.tsx",
+          "category": "shader",
+          "shader": "holographic.glsl",
+          "description": "A vibrant rainbow holographic shader with interference patterns and shimmer effects",
+          "features": [
+            "HSV color space rainbow",
+            "Interference patterns",
+            "Shimmer animation",
+            "Fresnel-like edge glow"
+          ],
+          "dependencies": ["three", "@types/three"],
+          "props": {
+            "speed": "number",
+            "className": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "canvas-agent",
+      "file": "canvas-agent.js",
+      "size": "16KB",
+      "components": [
+        {
+          "name": "ParticleBackground",
+          "file": "ParticleBackground.tsx",
+          "category": "canvas",
+          "description": "An interactive particle background with mouse interaction, depth layering, and dynamic connection lines",
+          "features": [
+            "Multi-layer depth system (0-1 depth)",
+            "Mouse attraction/repulsion",
+            "Dynamic connection lines",
+            "Edge bouncing physics",
+            "Velocity damping (friction)"
+          ],
+          "dependencies": [],
+          "props": {
+            "particleCount": "number (default: 100)",
+            "color": "string (hex color)",
+            "connectionDistance": "number (default: 150)",
+            "mouseInteraction": "boolean (default: true)",
+            "mouseRadius": "number (default: 200)",
+            "className": "string"
+          }
+        },
+        {
+          "name": "CanvasNetwork",
+          "file": "CanvasNetwork.tsx",
+          "category": "canvas",
+          "description": "A connected network of animated nodes with dynamic relationships and smooth motion",
+          "features": [
+            "Connected node graph",
+            "Random network topology",
+            "Smooth node animation",
+            "Glow effects",
+            "Edge bouncing"
+          ],
+          "dependencies": [],
+          "props": {
+            "nodeCount": "number (default: 50)",
+            "maxConnections": "number (default: 3)",
+            "color": "string (hex color)",
+            "className": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "audio-agent",
+      "file": "audio-agent.js",
+      "size": "17KB",
+      "noteFrequencies": {
+        "A0": 27.5,
+        "A1": 55.0,
+        "A2": 110.0,
+        "A3": 220.0,
+        "C2": 65.41,
+        "D2": 73.42,
+        "E2": 82.41,
+        "F2": 87.31,
+        "G2": 98.0
+      },
+      "components": [
+        {
+          "name": "AmbientSoundscape",
+          "file": "AmbientSoundscape.tsx",
+          "category": "audio",
+          "description": "A calming ambient soundscape with multi-layer drones, breathing pulse effect, and user controls",
+          "features": [
+            "Three-layer drone (A0: 27.5Hz, A1: 55Hz, A2: 110Hz)",
+            "LFO breathing pulse (0.2 Hz = 5s cycle)",
+            "Low-pass filter (800Hz cutoff)",
+            "Auto-play support",
+            "Smooth fade in/out",
+            "Volume control"
+          ],
+          "audioNodes": [
+            "OscillatorNode (sine, triangle, sawtooth)",
+            "GainNode (master + per-layer)",
+            "BiquadFilterNode (low-pass)",
+            "LFO OscillatorNode (0.2 Hz)"
+          ],
+          "dependencies": [],
+          "props": {
+            "autoPlay": "boolean (default: false)",
+            "volume": "number (default: 0.3)",
+            "breathingRate": "number (default: 0.2)",
+            "className": "string"
+          }
+        },
+        {
+          "name": "InteractiveSynth",
+          "file": "InteractiveSynth.tsx",
+          "category": "audio",
+          "description": "An interactive synthesizer with playable notes, multiple waveforms, and touch/mouse support",
+          "features": [
+            "6 playable notes (C2-A2)",
+            "Multiple waveform types",
+            "Mouse and touch support",
+            "Smooth envelope (fade out)",
+            "Visual feedback",
+            "Frequency display"
+          ],
+          "audioNodes": [
+            "OscillatorNode (configurable type)",
+            "GainNode (with automation)"
+          ],
+          "dependencies": [],
+          "props": {
+            "waveType": "OscillatorType (sine | triangle | sawtooth | square)",
+            "volume": "number (default: 0.3)",
+            "className": "string"
+          }
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalAgents": 4,
+    "totalComponents": 9,
+    "totalLinesOfCode": 1550,
+    "categories": {
+      "3d": 2,
+      "shader": 3,
+      "canvas": 2,
+      "audio": 2
+    },
+    "technologies": [
+      "Three.js v0.181.0",
+      "GLSL (vertex + fragment shaders)",
+      "Canvas 2D API",
+      "Web Audio API",
+      "React 19",
+      "TypeScript"
+    ]
+  }
+}

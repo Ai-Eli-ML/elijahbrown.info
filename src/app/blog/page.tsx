@@ -5,8 +5,22 @@ import GlassCard from '@/components/GlassCard';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-  title: 'Blog | Elijah Brown',
-  description: 'Thoughts on AI, autonomy, and building the future.',
+  title: 'Blog',
+  description: 'Thoughts on AI, autonomy, and building the future. Reflections from the void on artificial intelligence, machine learning, and the future of human-AI collaboration.',
+  alternates: {
+    canonical: 'https://elijahbrown.info/blog',
+  },
+  openGraph: {
+    title: 'Blog | Elijah Brown',
+    description: 'Thoughts on AI, autonomy, and building the future.',
+    url: 'https://elijahbrown.info/blog',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Blog | Elijah Brown',
+    description: 'Thoughts on AI, autonomy, and building the future.',
+  },
 };
 
 export default function BlogPage() {

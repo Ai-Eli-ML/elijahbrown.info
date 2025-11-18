@@ -1,0 +1,139 @@
+/* Top Progress Bar */
+.progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.progressBar.visible {
+  opacity: 1;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--chrome-silver),
+    var(--mercury),
+    var(--chrome-silver)
+  );
+  background-size: 200% 100%;
+  animation: shimmerProgress 2s linear infinite;
+  box-shadow: 0 0 10px rgba(217, 217, 217, 0.5);
+  transition: width 0.1s ease-out;
+}
+
+@keyframes shimmerProgress {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Circular Progress Indicator */
+.progressCircle {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  width: 40px;
+  height: 40px;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeInProgress 0.3s ease forwards;
+}
+
+@keyframes fadeInProgress {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.progressCircleBg {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.progressCircleFill {
+  stroke: var(--chrome-silver);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s ease-out;
+  filter: drop-shadow(0 0 4px rgba(217, 217, 217, 0.3));
+}
+
+.progressText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.5rem;
+  font-weight: 600;
+  color: var(--chrome-silver);
+  font-family: 'JetBrains Mono', monospace;
+  pointer-events: none;
+}
+
+/* Theme variations */
+:global(.theme-cyberpunk) .progressFill {
+  background: linear-gradient(
+    90deg,
+    #ff00ff,
+    #00ffff,
+    #ff00ff
+  );
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+}
+
+:global(.theme-cyberpunk) .progressCircleFill {
+  stroke: #ff00ff;
+  filter: drop-shadow(0 0 6px rgba(255, 0, 255, 0.8));
+}
+
+:global(.theme-light) .progressFill {
+  background: linear-gradient(
+    90deg,
+    #333333,
+    #000000,
+    #333333
+  );
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+:global(.theme-light) .progressCircleBg {
+  stroke: rgba(0, 0, 0, 0.1);
+}
+
+:global(.theme-light) .progressCircleFill {
+  stroke: #333333;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .progressCircle {
+    bottom: 80px;
+    left: 16px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .progressCircle svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .progressText {
+    font-size: 0.45rem;
+  }
+}

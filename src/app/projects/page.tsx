@@ -4,8 +4,22 @@ import GlassCard from '@/components/GlassCard';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-  title: 'Projects | Elijah Brown',
-  description: 'Experiments in autonomous intelligence. Systems that think with humans, not for us.',
+  title: 'Projects',
+  description: 'Experiments in autonomous intelligence. Systems that think with humans, not for us. Explore AI projects including autonomous research agents, command-line consciousness, and memory networks.',
+  alternates: {
+    canonical: 'https://elijahbrown.info/projects',
+  },
+  openGraph: {
+    title: 'Projects | Elijah Brown',
+    description: 'Experiments in autonomous intelligence. Systems that think with humans, not for us.',
+    url: 'https://elijahbrown.info/projects',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Projects | Elijah Brown',
+    description: 'Experiments in autonomous intelligence. Systems that think with humans, not for us.',
+  },
 };
 
 const projects = [
