@@ -1,6 +1,4 @@
 import createMDX from '@next/mdx';
-import remarkGfm from 'remark-gfm';
-import rehypeHighlight from 'rehype-highlight';
 
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
@@ -9,8 +7,9 @@ const nextConfig = {
 const withMDX = createMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypeHighlight],
+    // Use string-based plugin paths for Turbopack compatibility
+    remarkPlugins: ['remark-gfm'],
+    rehypePlugins: ['rehype-highlight'],
   },
 });
 
