@@ -1,38 +1,56 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Password for the protected /colleen page
-const COLLEEN_PASSWORD = 'Berkeley';
-const AUTH_COOKIE_NAME = 'colleen-auth';
+// Protected page configurations
+const PROTECTED_PAGES = {
+  colleen: {
+    password: 'Berkeley',
+    cookieName: 'colleen-auth',
+    loginPath: '/colleen/login',
+  },
+  jermaine: {
+    password: 'Dessalines1804',
+    cookieName: 'jermaine-auth',
+    loginPath: '/jermaine/login',
+  },
+};
 
 export function middleware(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
   const hostname = request.headers.get('host') || '';
 
-  // Check if this is the berkeley subdomain or /colleen path
-  const isBerkeleySubdomain = hostname.startsWith('berkeley.');
-  const isColleenPath = pathname.startsWith('/colleen');
+  // Determine which protected page we're accessing
+  let pageConfig = null;
+  let pageName = '';
 
-  // Only protect /colleen route (or any route on berkeley subdomain)
-  if (!isColleenPath && !isBerkeleySubdomain) {
+  if (pathname.startsWith('/colleen') || hostname.startsWith('berkeley.')) {
+    pageConfig = PROTECTED_PAGES.colleen;
+    pageName = 'colleen';
+  } else if (pathname.startsWith('/jermaine')) {
+    pageConfig = PROTECTED_PAGES.jermaine;
+    pageName = 'jermaine';
+  }
+
+  // Not a protected route
+  if (!pageConfig) {
     return NextResponse.next();
   }
 
   // Check if user is already authenticated via cookie
-  const authCookie = request.cookies.get(AUTH_COOKIE_NAME);
+  const authCookie = request.cookies.get(pageConfig.cookieName);
   if (authCookie?.value === 'authenticated') {
     return NextResponse.next();
   }
 
   // Check if password is being submitted
   const submittedPassword = searchParams.get('password');
-  if (submittedPassword === COLLEEN_PASSWORD) {
+  if (submittedPassword === pageConfig.password) {
     // Set authentication cookie and redirect to clean URL
     const cleanUrl = new URL(pathname, request.url);
     const response = NextResponse.redirect(cleanUrl);
 
     // Set cookie with domain that works for both www and non-www
-    response.cookies.set(AUTH_COOKIE_NAME, 'authenticated', {
+    response.cookies.set(pageConfig.cookieName, 'authenticated', {
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
@@ -44,8 +62,8 @@ export function middleware(request: NextRequest) {
   }
 
   // Show login page if not authenticated
-  const loginUrl = new URL('/colleen/login', request.url);
-  if (pathname !== '/colleen/login') {
+  const loginUrl = new URL(pageConfig.loginPath, request.url);
+  if (pathname !== pageConfig.loginPath) {
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
   }
@@ -54,5 +72,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/colleen/:path*'],
+  matcher: ['/colleen/:path*', '/jermaine/:path*'],
 };
