@@ -28,13 +28,17 @@ export function middleware(request: NextRequest) {
   const submittedPassword = searchParams.get('password');
   if (submittedPassword === COLLEEN_PASSWORD) {
     // Set authentication cookie and redirect to clean URL
-    const response = NextResponse.redirect(new URL(pathname, request.url));
+    const cleanUrl = new URL(pathname, request.url);
+    const response = NextResponse.redirect(cleanUrl);
+
+    // Set cookie with domain that works for both www and non-www
     response.cookies.set(AUTH_COOKIE_NAME, 'authenticated', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',
+      domain: '.elijahbrown.info', // Works for www and non-www
     });
     return response;
   }
