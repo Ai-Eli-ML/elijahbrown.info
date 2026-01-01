@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // Password for the protected /colleen page
-const COLLEEN_PASSWORD = 'Berkely';
+const COLLEEN_PASSWORD = 'Berkeley';
 const AUTH_COOKIE_NAME = 'colleen-auth';
 
 export function middleware(request: NextRequest) {
