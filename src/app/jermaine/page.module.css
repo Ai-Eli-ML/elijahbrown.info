@@ -152,6 +152,16 @@
   transform: translateX(4px);
 }
 
+.agentItemStatic {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 215, 0, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 12px;
+}
+
 .agentIcon {
   font-size: 1.5rem;
 }
@@ -219,6 +229,75 @@
   background: rgba(255, 215, 0, 0.2);
   color: #ffd700;
   border-radius: 10px;
+}
+
+/* Profile Document */
+.profileDoc {
+  background: rgba(255, 215, 0, 0.02);
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.profileDoc h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffd700;
+  margin: 0 0 1.5rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #ffd700;
+  margin: 0 0 1rem 0;
+}
+
+.section p {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+
+.section ul {
+  color: rgba(255, 255, 255, 0.7);
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+.section li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.table th,
+.table td {
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.table th {
+  background: rgba(255, 215, 0, 0.1);
+  color: #ffd700;
+  font-weight: 600;
+}
+
+.table td {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Roadmap */

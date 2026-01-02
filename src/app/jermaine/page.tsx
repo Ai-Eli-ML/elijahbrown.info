@@ -5,6 +5,7 @@ import styles from './page.module.css';
 
 export default function JermainePage() {
   const [showRoadmap, setShowRoadmap] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   return (
     <div className={styles.container}>
@@ -32,26 +33,139 @@ export default function JermainePage() {
           <div className={styles.card}>
             <h2>Research Profile</h2>
             <p>Your comprehensive research profile documenting the Living History AI project:</p>
-            <a
-              href="/research/jermaine-historical-ai-profile"
+            <button
+              onClick={() => setShowProfile(!showProfile)}
               className={styles.primaryButton}
             >
-              View Full Research Profile
-            </a>
+              {showProfile ? 'Hide Research Profile' : 'View Full Research Profile'}
+            </button>
           </div>
+
+          {/* Research Profile Content */}
+          {showProfile && (
+            <div className={styles.profileDoc}>
+              <h2>Living History AI - Research Profile</h2>
+
+              <section className={styles.section}>
+                <h3>Project Vision</h3>
+                <p>
+                  Living History AI transforms historical education by bringing figures from the past
+                  to life through advanced AI agents. Using large language models, voice synthesis,
+                  and video generation, we create immersive experiences where users can have
+                  conversations with historical figures as if they were alive today.
+                </p>
+              </section>
+
+              <section className={styles.section}>
+                <h3>Core Mission</h3>
+                <blockquote className={styles.quote}>
+                  &ldquo;Everything that is in nature from the past can be shared in a new way.&rdquo;
+                </blockquote>
+                <p>
+                  Our mission is to make history accessible, engaging, and personally meaningful
+                  for modern audiences. By leveraging AI, we preserve and share the stories of
+                  those who shaped our world, starting with the heroes of the Haitian Revolution.
+                </p>
+              </section>
+
+              <section className={styles.section}>
+                <h3>Phase 1: Haitian Revolution</h3>
+                <p>Focus on the most significant slave rebellion in history:</p>
+                <ul>
+                  <li><strong>Jean-Jacques Dessalines</strong> - Father of Haitian Independence (COMPLETED)</li>
+                  <li><strong>Toussaint Louverture</strong> - Revolutionary Leader &amp; Strategist</li>
+                  <li><strong>Henri Christophe</strong> - King of Northern Haiti</li>
+                  <li><strong>Boukman Dutty</strong> - Vodou Priest &amp; Rebellion Initiator</li>
+                  <li><strong>Marie-Jeanne Lamartiniere</strong> - Female Warrior &amp; Freedom Fighter</li>
+                </ul>
+              </section>
+
+              <section className={styles.section}>
+                <h3>Technical Approach</h3>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Component</th>
+                      <th>Technology</th>
+                      <th>Purpose</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Knowledge Base</td>
+                      <td>RAG + Qdrant</td>
+                      <td>Historical accuracy from primary sources</td>
+                    </tr>
+                    <tr>
+                      <td>Personality</td>
+                      <td>Claude Opus 4.5</td>
+                      <td>Authentic voice &amp; character</td>
+                    </tr>
+                    <tr>
+                      <td>Voice</td>
+                      <td>NVIDIA NeMo</td>
+                      <td>Period-appropriate speech synthesis</td>
+                    </tr>
+                    <tr>
+                      <td>Video</td>
+                      <td>AI Generation</td>
+                      <td>Visual storytelling &amp; reenactments</td>
+                    </tr>
+                    <tr>
+                      <td>Infrastructure</td>
+                      <td>RTX 5090</td>
+                      <td>Real-time inference &amp; rendering</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+
+              <section className={styles.section}>
+                <h3>Target Audiences</h3>
+                <ul>
+                  <li><strong>Educators</strong> - Curriculum integration for K-12 and universities</li>
+                  <li><strong>Museums</strong> - Interactive exhibits and installations</li>
+                  <li><strong>Documentary Filmmakers</strong> - AI-assisted historical recreations</li>
+                  <li><strong>Students</strong> - Direct engagement with historical figures</li>
+                  <li><strong>Heritage Organizations</strong> - Cultural preservation initiatives</li>
+                </ul>
+              </section>
+
+              <section className={styles.section}>
+                <h3>Revenue Model</h3>
+                <ul>
+                  <li><strong>YouTube Content</strong> - Ad revenue from educational videos</li>
+                  <li><strong>Educational Licensing</strong> - School &amp; university subscriptions</li>
+                  <li><strong>Museum Partnerships</strong> - Installation licensing fees</li>
+                  <li><strong>Premium API</strong> - Developer access for third-party apps</li>
+                  <li><strong>Documentary Sales</strong> - Content licensing to media companies</li>
+                </ul>
+              </section>
+
+              <section className={styles.section}>
+                <h3>Expansion Roadmap</h3>
+                <ul>
+                  <li><strong>Phase 2</strong> - Pan-African Leaders (Marcus Garvey, Kwame Nkrumah, Patrice Lumumba)</li>
+                  <li><strong>Phase 3</strong> - Global Revolutionary Figures (Simón Bolívar, Mahatma Gandhi)</li>
+                  <li><strong>Phase 4</strong> - Ancient Civilizations (Egyptian, Nubian, Malian empires)</li>
+                  <li><strong>Phase 5</strong> - Interactive Historical Debates &amp; Cross-era Conversations</li>
+                </ul>
+              </section>
+            </div>
+          )}
 
           {/* Completed Works Card */}
           <div className={styles.card}>
             <h2>Completed Agent Reports</h2>
             <div className={styles.agentList}>
-              <a href="/blog/dessalines-battles-against-france" className={styles.agentItem}>
+              <div className={styles.agentItemStatic}>
                 <span className={styles.agentIcon}>&#x2694;</span>
                 <div className={styles.agentInfo}>
                   <h3>Jean-Jacques Dessalines</h3>
                   <p>Battling the French - Haitian Revolution</p>
                 </div>
                 <span className={styles.statusBadge}>Complete</span>
-              </a>
+              </div>
             </div>
           </div>
 
