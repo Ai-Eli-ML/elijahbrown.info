@@ -19,6 +19,7 @@ function LoginForm() {
 
     const redirect = searchParams.get('redirect') || '/jermaine';
 
+    // Redirect with password in URL (middleware will validate and set cookie)
     router.push(`${redirect}?password=${encodeURIComponent(password)}`);
   };
 
@@ -79,9 +80,8 @@ export default function JermaineLogin() {
     <div className={styles.container}>
       <div className={styles.loginCard}>
         <div className={styles.header}>
-          <div className={styles.icon}>&#x1F3DB;</div>
-          <h1 className={styles.title}>Living History AI</h1>
-          <p className={styles.subtitle}>Research Portal - Password Protected</p>
+          <h1 className={styles.title}>Private Page</h1>
+          <p className={styles.subtitle}>This content is password protected</p>
         </div>
 
         <Suspense fallback={<LoginFormFallback />}>
@@ -89,7 +89,7 @@ export default function JermaineLogin() {
         </Suspense>
 
         <p className={styles.footer}>
-          Contact Elijah Brown for access
+          Contact the site owner if you need access
         </p>
       </div>
     </div>
