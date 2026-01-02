@@ -20,14 +20,24 @@ export default function ColleenPage() {
           <div className={styles.card}>
             <h2>Meeting Notes</h2>
             <p>Access our Zoom meeting recordings and AI-generated notes:</p>
-            <a
-              href="https://fathom.video/share/xEDZo5z_fvGXN1HJjXGMRHVBnsA58Hpv"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.primaryButton}
-            >
-              View Fathom Meeting Notes
-            </a>
+            <div className={styles.buttonGroup}>
+              <a
+                href="https://fathom.video/share/xEDZo5z_fvGXN1HJjXGMRHVBnsA58Hpv"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.primaryButton}
+              >
+                Meeting Notes #1
+              </a>
+              <a
+                href="https://fathom.video/share/vzNkscgP9cTjuQSYsbFrfNkmRQi6P26V"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.primaryButton}
+              >
+                Meeting Notes #2
+              </a>
+            </div>
           </div>
 
           {/* Architecture Document Card */}
