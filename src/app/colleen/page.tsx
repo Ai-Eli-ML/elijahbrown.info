@@ -22,23 +22,35 @@ export default function ColleenPage() {
             <h2>Meeting Notes</h2>
             <p>Access our Zoom meeting recordings and AI-generated notes:</p>
 
-            {/* Quick Links - Static Fathom Share Links */}
-            <div className={styles.buttonGroup}>
+            {/* Meeting Cards */}
+            <div className={styles.meetingCards}>
               <a
                 href="https://fathom.video/share/xEDZo5z_fvGXN1HJjXGMRHVBnsA58Hpv"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={styles.primaryButton}
+                className={styles.meetingCard}
               >
-                Meeting Notes #1
+                <div className={styles.meetingCardHeader}>
+                  <span className={styles.meetingIcon}>📹</span>
+                  <span className={styles.meetingDate}>Dec 30, 2024</span>
+                </div>
+                <h3 className={styles.meetingCardTitle}>Initial Discovery Call</h3>
+                <p className={styles.meetingCardDesc}>Project vision, diary/blog architecture, and technical requirements</p>
+                <span className={styles.watchButton}>Watch Recording →</span>
               </a>
               <a
                 href="https://fathom.video/share/vzNkscgP9cTjuQSYsbFrfNkmRQi6P26V"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={styles.primaryButton}
+                className={styles.meetingCard}
               >
-                Meeting Notes #2
+                <div className={styles.meetingCardHeader}>
+                  <span className={styles.meetingIcon}>📹</span>
+                  <span className={styles.meetingDate}>Jan 2, 2025</span>
+                </div>
+                <h3 className={styles.meetingCardTitle}>Architecture Review</h3>
+                <p className={styles.meetingCardDesc}>Next.js structure, navigation flow, and implementation roadmap</p>
+                <span className={styles.watchButton}>Watch Recording →</span>
               </a>
             </div>
 

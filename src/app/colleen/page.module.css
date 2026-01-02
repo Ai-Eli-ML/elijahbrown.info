@@ -70,6 +70,75 @@
   gap: 0.75rem;
 }
 
+.meetingCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.meetingCard {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.meetingCard:hover {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -5px rgba(99, 102, 241, 0.25);
+}
+
+.meetingCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.meetingIcon {
+  font-size: 1.25rem;
+}
+
+.meetingDate {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.meetingCardTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+}
+
+.meetingCardDesc {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+  flex-grow: 1;
+}
+
+.watchButton {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  transition: color 0.2s ease;
+}
+
+.meetingCard:hover .watchButton {
+  color: #c7d2fe;
+}
+
 .divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.1);
