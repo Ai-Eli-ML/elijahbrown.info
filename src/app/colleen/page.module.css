@@ -70,6 +70,18 @@
   gap: 0.75rem;
 }
 
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 1.25rem 0;
+}
+
+.liveMeetingsContainer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 .primaryButton {
   display: inline-block;
   padding: 0.875rem 1.5rem;

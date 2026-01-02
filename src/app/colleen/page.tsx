@@ -1,11 +1,12 @@
 'use client';
 
-import { Metadata } from 'next';
 import { useState } from 'react';
+import MeetingList from '@/components/fathom/MeetingList';
 import styles from './page.module.css';
 
 export default function ColleenPage() {
   const [showArchitecture, setShowArchitecture] = useState(false);
+  const [showLiveMeetings, setShowLiveMeetings] = useState(false);
 
   return (
     <div className={styles.container}>
@@ -16,10 +17,12 @@ export default function ColleenPage() {
         </header>
 
         <section className={styles.mainContent}>
-          {/* Quick Links Card */}
+          {/* Live Meeting Notes Card */}
           <div className={styles.card}>
             <h2>Meeting Notes</h2>
             <p>Access our Zoom meeting recordings and AI-generated notes:</p>
+
+            {/* Quick Links - Static Fathom Share Links */}
             <div className={styles.buttonGroup}>
               <a
                 href="https://fathom.video/share/xEDZo5z_fvGXN1HJjXGMRHVBnsA58Hpv"
@@ -38,6 +41,26 @@ export default function ColleenPage() {
                 Meeting Notes #2
               </a>
             </div>
+
+            {/* Toggle for Live Meeting Feed */}
+            <div className={styles.divider}></div>
+            <button
+              onClick={() => setShowLiveMeetings(!showLiveMeetings)}
+              className={styles.secondaryButton}
+            >
+              {showLiveMeetings ? 'Hide All Meetings' : 'View All Meetings (Live Feed)'}
+            </button>
+
+            {/* Live Meeting List */}
+            {showLiveMeetings && (
+              <div className={styles.liveMeetingsContainer}>
+                <MeetingList
+                  maxMeetings={10}
+                  showSummary={true}
+                  showActionItems={true}
+                />
+              </div>
+            )}
           </div>
 
           {/* Architecture Document Card */}
