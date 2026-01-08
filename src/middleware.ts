@@ -13,6 +13,11 @@ const PROTECTED_PAGES = {
     cookieName: 'jermaine-auth',
     loginPath: '/jermaine/login',
   },
+  private: {
+    password: 'Sxilent2026',
+    cookieName: 'private-auth',
+    loginPath: '/private/login',
+  },
 };
 
 export function middleware(request: NextRequest) {
@@ -29,6 +34,9 @@ export function middleware(request: NextRequest) {
   } else if (pathname.startsWith('/jermaine')) {
     pageConfig = PROTECTED_PAGES.jermaine;
     pageName = 'jermaine';
+  } else if (pathname.startsWith('/private')) {
+    pageConfig = PROTECTED_PAGES.private;
+    pageName = 'private';
   }
 
   // Not a protected route
@@ -72,5 +80,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/colleen/:path*', '/jermaine/:path*'],
+  matcher: ['/colleen/:path*', '/jermaine/:path*', '/private/:path*'],
 };
