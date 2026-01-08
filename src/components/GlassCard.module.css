@@ -48,21 +48,3 @@
 .reflection:hover::after {
   left: 100%;
 }
-
-@media (max-width: 768px) {
-  .card {
-    padding: var(--space-4);
-    border-radius: 12px;
-  }
-
-  .card:hover {
-    transform: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .card {
-    padding: var(--space-3);
-    border-radius: 8px;
-  }
-}

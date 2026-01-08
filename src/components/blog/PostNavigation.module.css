@@ -104,22 +104,8 @@
 }
 
 @media (max-width: 768px) {
-  .navigation {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-  }
-
   .grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .link {
-    padding: 1rem;
-  }
-
-  .link:hover {
-    transform: none;
   }
 
   .next {
@@ -134,27 +120,5 @@
 
   .next:hover .arrow {
     transform: translateY(-50%) translateX(-4px);
-  }
-
-  .title {
-    font-size: 0.9rem;
-  }
-
-  .arrow {
-    font-size: 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .link {
-    padding: 0.875rem;
-  }
-
-  .title {
-    font-size: 0.85rem;
-  }
-
-  .label {
-    font-size: 0.65rem;
   }
 }
