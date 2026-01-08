@@ -37,3 +37,30 @@
   width: 1.125rem;
   height: 1.125rem;
 }
+
+@media (max-width: 768px) {
+  .shareButtons {
+    gap: 0.5rem;
+  }
+
+  .shareButton {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.75rem;
+  }
+
+  .shareButton:hover {
+    transform: none;
+  }
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .shareButton {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.7rem;
+  }
+}
