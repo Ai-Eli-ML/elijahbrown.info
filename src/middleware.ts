@@ -18,6 +18,11 @@ const PROTECTED_PAGES = {
     cookieName: 'private-auth',
     loginPath: '/private/login',
   },
+  working: {
+    password: 'sxilent',
+    cookieName: 'working-auth',
+    loginPath: '/working/login',
+  },
 };
 
 export function middleware(request: NextRequest) {
@@ -37,6 +42,9 @@ export function middleware(request: NextRequest) {
   } else if (pathname.startsWith('/private')) {
     pageConfig = PROTECTED_PAGES.private;
     pageName = 'private';
+  } else if (pathname.startsWith('/working')) {
+    pageConfig = PROTECTED_PAGES.working;
+    pageName = 'working';
   }
 
   // Not a protected route
@@ -80,5 +88,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/colleen/:path*', '/jermaine/:path*', '/private/:path*'],
+  matcher: ['/colleen/:path*', '/jermaine/:path*', '/private/:path*', '/working/:path*'],
 };
