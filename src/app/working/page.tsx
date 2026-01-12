@@ -85,12 +85,12 @@ export default function WorkingPage() {
             </ul>
             <div className={styles.linkGroup}>
               <a
-                href="https://www.figma.com/design/placeholder"
+                href="https://mail.google.com/mail/u/0/#search/figma+draft+4"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.primaryLink}
               >
-                Open Figma →
+                Accept Figma Invite →
               </a>
               <a
                 href="https://github.com/PaperPrisons/website"
