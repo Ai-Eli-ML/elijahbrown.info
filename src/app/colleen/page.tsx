@@ -8,15 +8,103 @@ export default function ColleenPage() {
   const [showArchitecture, setShowArchitecture] = useState(false);
   const [showLiveMeetings, setShowLiveMeetings] = useState(false);
 
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <header className={styles.header}>
           <h1 className={styles.title}>Welcome, Colleen</h1>
           <p className={styles.subtitle}>PaperPrisons.org Project Hub</p>
+          <p className={styles.lastUpdated}>{currentDate}</p>
         </header>
 
         <section className={styles.mainContent}>
+          {/* Active Status Banner */}
+          <div className={styles.statusBanner}>
+            <div className={styles.statusHeader}>
+              <span className={styles.statusIcon}>🚀</span>
+              <div>
+                <h2>Build In Progress</h2>
+                <p>Eli has taken over - building now for Monday deadline</p>
+              </div>
+            </div>
+            <div className={styles.statusDetails}>
+              <div className={styles.statusItem}>
+                <span className={styles.statusLabel}>Deadline</span>
+                <span className={styles.statusValue}>Monday, Jan 12 (Anniversary)</span>
+              </div>
+              <div className={styles.statusItem}>
+                <span className={styles.statusLabel}>Approach</span>
+                <span className={styles.statusValue}>Next.js + Talkspace-style design</span>
+              </div>
+              <div className={styles.statusItem}>
+                <span className={styles.statusLabel}>Backup Plan</span>
+                <span className={styles.statusValue}>PHP refresh on separate branch</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Today's Tasks */}
+          <div className={styles.card}>
+            <h2>Today's Build Plan</h2>
+            <p>Dual-track approach to ensure we hit Monday:</p>
+            <ul className={styles.taskList}>
+              <li className={styles.taskItem}>
+                <span className={styles.taskCheck}>✓</span>
+                Husky handoff complete - Eli taking over
+              </li>
+              <li className={styles.taskItem}>
+                <span className={styles.taskCheck}>✓</span>
+                GitHub collaborator access confirmed
+              </li>
+              <li className={styles.taskItem}>
+                <span className={styles.taskPending}>○</span>
+                Clone repo & set up branches (next-rebuild + php-refresh)
+              </li>
+              <li className={styles.taskItem}>
+                <span className={styles.taskPending}>○</span>
+                Build Talkspace-style landing page (Next.js)
+              </li>
+              <li className={styles.taskItem}>
+                <span className={styles.taskPending}>○</span>
+                Deploy to Vercel for preview
+              </li>
+              <li className={styles.taskItem}>
+                <span className={styles.taskPending}>○</span>
+                Innovation Lab blog structure
+              </li>
+              <li className={styles.taskItem}>
+                <span className={styles.taskPending}>○</span>
+                Team page rebuild
+              </li>
+            </ul>
+          </div>
+
+          {/* What Eli Knows You Need */}
+          <div className={styles.card}>
+            <h2>Scope Confirmed</h2>
+            <p>Based on our calls and your docs:</p>
+            <ul className={styles.scopeList}>
+              <li><strong>Landing Page:</strong> Talkspace-style redesign</li>
+              <li><strong>Team Page:</strong> Needs to be redone</li>
+              <li><strong>Innovation Lab:</strong> New blog section with:
+                <ul>
+                  <li>Tools for Pro Se Defendants</li>
+                  <li>Tools for Researchers</li>
+                  <li>Tools for Advocates</li>
+                </ul>
+              </li>
+              <li><strong>Diary Tool:</strong> New diary for DLS project</li>
+              <li><strong>Existing Tools:</strong> Keep RJA, diary.html working (Navid coordination)</li>
+            </ul>
+          </div>
+
           {/* Live Meeting Notes Card */}
           <div className={styles.card}>
             <h2>Meeting Notes</h2>

@@ -32,6 +32,130 @@
   margin: 0;
 }
 
+.lastUpdated {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Status Banner */
+.statusBanner {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(16, 185, 129, 0.1) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+}
+
+.statusHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.statusIcon {
+  font-size: 2rem;
+}
+
+.statusHeader h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4ade80;
+  margin: 0 0 0.25rem 0;
+}
+
+.statusHeader p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.statusDetails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.statusItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.statusLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statusValue {
+  font-size: 0.95rem;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Task List */
+.taskList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.taskItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+}
+
+.taskItem:last-child {
+  border-bottom: none;
+}
+
+.taskCheck {
+  color: #4ade80;
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.taskPending {
+  color: rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+/* Scope List */
+.scopeList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.scopeList > li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.scopeList > li:last-child {
+  border-bottom: none;
+}
+
+.scopeList ul {
+  margin-top: 0.5rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.scopeList ul li {
+  padding: 0.25rem 0;
+}
+
 .mainContent {
   display: grid;
   gap: 1.5rem;
