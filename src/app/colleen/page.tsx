@@ -64,12 +64,20 @@ export default function ColleenPage() {
                 GitHub collaborator access confirmed
               </li>
               <li className={styles.taskItem}>
-                <span className={styles.taskPending}>○</span>
-                Clone repo & set up branches (next-rebuild + php-refresh)
+                <span className={styles.taskCheck}>✓</span>
+                Repo cloned & Next.js scaffold exists
+              </li>
+              <li className={styles.taskItem}>
+                <span className={styles.taskCheck}>✓</span>
+                Homepage components built (Hero, Products, Mission, Stats, CTA)
+              </li>
+              <li className={styles.taskItem}>
+                <span className={styles.taskCheck}>✓</span>
+                Blog, Diary, About pages scaffolded
               </li>
               <li className={styles.taskItem}>
                 <span className={styles.taskPending}>○</span>
-                Build Talkspace-style landing page (Next.js)
+                Transform to Talkspace-style design
               </li>
               <li className={styles.taskItem}>
                 <span className={styles.taskPending}>○</span>
@@ -77,11 +85,11 @@ export default function ColleenPage() {
               </li>
               <li className={styles.taskItem}>
                 <span className={styles.taskPending}>○</span>
-                Innovation Lab blog structure
+                Team page rebuild
               </li>
               <li className={styles.taskItem}>
                 <span className={styles.taskPending}>○</span>
-                Team page rebuild
+                Innovation Lab blog structure
               </li>
             </ul>
           </div>
