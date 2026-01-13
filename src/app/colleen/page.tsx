@@ -121,18 +121,18 @@ export default function ColleenPage() {
             {/* Meeting Cards */}
             <div className={styles.meetingCards}>
               <a
-                href="https://fathom.video/share/xEDZo5z_fvGXN1HJjXGMRHVBnsA58Hpv"
+                href="https://fathom.video/calls/525615389?tab=summary"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.meetingCard}
               >
                 <div className={styles.meetingCardHeader}>
                   <span className={styles.meetingIcon}>📹</span>
-                  <span className={styles.meetingDate}>Dec 30, 2024</span>
+                  <span className={styles.meetingDate}>Jan 9, 2026</span>
                 </div>
-                <h3 className={styles.meetingCardTitle}>Initial Discovery Call</h3>
-                <p className={styles.meetingCardDesc}>Project vision, diary/blog architecture, and technical requirements</p>
-                <span className={styles.watchButton}>Watch Recording →</span>
+                <h3 className={styles.meetingCardTitle}>Tech Check-In</h3>
+                <p className={styles.meetingCardDesc}>Jake's Drupal updates, Twilio DNS issue, team coordination</p>
+                <span className={styles.watchButton}>View Notes →</span>
               </a>
               <a
                 href="https://fathom.video/share/vzNkscgP9cTjuQSYsbFrfNkmRQi6P26V"
@@ -142,10 +142,24 @@ export default function ColleenPage() {
               >
                 <div className={styles.meetingCardHeader}>
                   <span className={styles.meetingIcon}>📹</span>
-                  <span className={styles.meetingDate}>Jan 2, 2025</span>
+                  <span className={styles.meetingDate}>Jan 2, 2026</span>
                 </div>
                 <h3 className={styles.meetingCardTitle}>Architecture Review</h3>
                 <p className={styles.meetingCardDesc}>Next.js structure, navigation flow, and implementation roadmap</p>
+                <span className={styles.watchButton}>Watch Recording →</span>
+              </a>
+              <a
+                href="https://fathom.video/share/xEDZo5z_fvGXN1HJjXGMRHVBnsA58Hpv"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.meetingCard}
+              >
+                <div className={styles.meetingCardHeader}>
+                  <span className={styles.meetingIcon}>📹</span>
+                  <span className={styles.meetingDate}>Dec 30, 2025</span>
+                </div>
+                <h3 className={styles.meetingCardTitle}>Initial Discovery Call</h3>
+                <p className={styles.meetingCardDesc}>Project vision, diary/blog architecture, and technical requirements</p>
                 <span className={styles.watchButton}>Watch Recording →</span>
               </a>
             </div>
