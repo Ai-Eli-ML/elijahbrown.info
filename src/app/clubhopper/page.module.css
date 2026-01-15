@@ -308,6 +308,50 @@
 }
 
 /* Team Section */
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.teamCard {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.teamCard:hover {
+  border-color: rgba(168, 85, 247, 0.6);
+  transform: translateY(-2px);
+}
+
+.teamCard h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.teamRole {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3));
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #c084fc;
+  margin-bottom: 0.75rem;
+}
+
+.teamCard p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .teamSection {
   text-align: center;
   padding: 2rem;
@@ -380,7 +424,8 @@
 
   .overviewGrid,
   .featuresGrid,
-  .techGrid {
+  .techGrid,
+  .teamGrid {
     grid-template-columns: 1fr;
   }
 

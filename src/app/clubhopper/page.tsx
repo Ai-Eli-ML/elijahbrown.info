@@ -18,7 +18,7 @@ interface Feature {
 export default function ClubHopperDashboard() {
   const [projectStatus, setProjectStatus] = useState<ProjectStatus>({
     phase: 'Planning & Design',
-    completion: 5,
+    completion: 10,
     lastUpdated: new Date().toISOString().split('T')[0],
   });
 
@@ -58,10 +58,18 @@ export default function ClubHopperDashboard() {
   const timeline = [
     { date: '2025-07-02', event: 'Initial concept and feature planning', complete: true },
     { date: '2026-01-15', event: 'Development environment setup', complete: true },
+    { date: '2026-01-15', event: 'Team roles assigned - Development call', complete: true },
     { date: '2026-01', event: 'MVP Design & Wireframes', complete: false },
-    { date: '2026-02', event: 'Core App Development', complete: false },
+    { date: '2026-02', event: 'Core App Development + Miami Trip', complete: false },
     { date: '2026-Q1', event: 'Albany Beta Launch', complete: false },
     { date: '2026-Q2', event: 'Full Capital District Launch', complete: false },
+  ];
+
+  const team = [
+    { name: 'Elijah', role: 'Dev Lead', focus: 'Engineering & Backend' },
+    { name: 'Q', role: 'Marketing Lead', focus: 'Marketing & Payments' },
+    { name: 'America', role: 'Ops/QA', focus: 'Operations & Quality' },
+    { name: 'Cyril', role: 'Communications', focus: 'Venue Outreach' },
   ];
 
   return (
@@ -187,11 +195,20 @@ export default function ClubHopperDashboard() {
           </div>
         </section>
 
-        {/* Contact */}
+        {/* Team */}
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Team</h2>
+          <div className={styles.teamGrid}>
+            {team.map((member, index) => (
+              <div key={index} className={styles.teamCard}>
+                <h4>{member.name}</h4>
+                <span className={styles.teamRole}>{member.role}</span>
+                <p>{member.focus}</p>
+              </div>
+            ))}
+          </div>
           <div className={styles.teamSection}>
-            <p>Development by <strong>AdvancingTechnology</strong></p>
+            <p>Powered by <strong>AdvancingTechnology</strong></p>
             <p>Albany Capital District Launch - Q1 2026</p>
             <div className={styles.discordLink}>
               <span>Join the discussion:</span>
