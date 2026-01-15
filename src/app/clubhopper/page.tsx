@@ -195,7 +195,7 @@ export default function ClubHopperDashboard() {
             <p>Albany Capital District Launch - Q1 2026</p>
             <div className={styles.discordLink}>
               <span>Join the discussion:</span>
-              <a href="https://discord.gg/cool" target="_blank" rel="noopener noreferrer">
+              <a href="https://discord.com/channels/998229485063245845/1443273789495578655" target="_blank" rel="noopener noreferrer">
                 Discord: COOL Server / Club Hopper
               </a>
             </div>
