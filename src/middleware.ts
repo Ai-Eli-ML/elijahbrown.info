@@ -23,6 +23,11 @@ const PROTECTED_PAGES = {
     cookieName: 'working-auth',
     loginPath: '/working/login',
   },
+  clubhopper: {
+    password: 'TheMemberz',
+    cookieName: 'clubhopper-auth',
+    loginPath: '/clubhopper/login',
+  },
 };
 
 export function middleware(request: NextRequest) {
@@ -45,6 +50,9 @@ export function middleware(request: NextRequest) {
   } else if (pathname.startsWith('/working')) {
     pageConfig = PROTECTED_PAGES.working;
     pageName = 'working';
+  } else if (pathname.startsWith('/clubhopper')) {
+    pageConfig = PROTECTED_PAGES.clubhopper;
+    pageName = 'clubhopper';
   }
 
   // Not a protected route
@@ -88,5 +96,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/colleen/:path*', '/jermaine/:path*', '/private/:path*', '/working/:path*'],
+  matcher: ['/colleen/:path*', '/jermaine/:path*', '/private/:path*', '/working/:path*', '/clubhopper/:path*'],
 };
