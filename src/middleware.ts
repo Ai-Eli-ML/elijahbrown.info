@@ -28,6 +28,37 @@ const PROTECTED_PAGES = {
     cookieName: 'clubhopper-auth',
     loginPath: '/clubhopper/login',
   },
+  // Team member pages
+  shiriru: {
+    password: 'ProjectManager2026',
+    cookieName: 'shiriru-auth',
+    loginPath: '/shiriru/login',
+  },
+  marika: {
+    password: 'COOAccess2026',
+    cookieName: 'marika-auth',
+    loginPath: '/marika/login',
+  },
+  ziva: {
+    password: 'ZivaTeam2026',
+    cookieName: 'ziva-auth',
+    loginPath: '/ziva/login',
+  },
+  intern: {
+    password: 'InternAccess2026',
+    cookieName: 'intern-auth',
+    loginPath: '/intern/login',
+  },
+  cfo: {
+    password: 'CFOFinance2026',
+    cookieName: 'cfo-auth',
+    loginPath: '/cfo/login',
+  },
+  shirene: {
+    password: 'AccountManager2026',
+    cookieName: 'shirene-auth',
+    loginPath: '/shirene/login',
+  },
 };
 
 export function middleware(request: NextRequest) {
@@ -53,6 +84,24 @@ export function middleware(request: NextRequest) {
   } else if (pathname.startsWith('/clubhopper')) {
     pageConfig = PROTECTED_PAGES.clubhopper;
     pageName = 'clubhopper';
+  } else if (pathname.startsWith('/shiriru')) {
+    pageConfig = PROTECTED_PAGES.shiriru;
+    pageName = 'shiriru';
+  } else if (pathname.startsWith('/marika')) {
+    pageConfig = PROTECTED_PAGES.marika;
+    pageName = 'marika';
+  } else if (pathname.startsWith('/ziva')) {
+    pageConfig = PROTECTED_PAGES.ziva;
+    pageName = 'ziva';
+  } else if (pathname.startsWith('/intern')) {
+    pageConfig = PROTECTED_PAGES.intern;
+    pageName = 'intern';
+  } else if (pathname.startsWith('/cfo')) {
+    pageConfig = PROTECTED_PAGES.cfo;
+    pageName = 'cfo';
+  } else if (pathname.startsWith('/shirene')) {
+    pageConfig = PROTECTED_PAGES.shirene;
+    pageName = 'shirene';
   }
 
   // Not a protected route
@@ -96,5 +145,17 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/colleen/:path*', '/jermaine/:path*', '/private/:path*', '/working/:path*', '/clubhopper/:path*'],
+  matcher: [
+    '/colleen/:path*',
+    '/jermaine/:path*',
+    '/private/:path*',
+    '/working/:path*',
+    '/clubhopper/:path*',
+    '/shiriru/:path*',
+    '/marika/:path*',
+    '/ziva/:path*',
+    '/intern/:path*',
+    '/cfo/:path*',
+    '/shirene/:path*',
+  ],
 };
