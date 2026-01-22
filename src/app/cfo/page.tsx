@@ -32,6 +32,25 @@ export default function CFOPage() {
           </div>
 
           <div className={styles.card}>
+            <h2>Ask Claude in Discord</h2>
+            <p>Use <strong>@cool</strong> in your dedicated Discord channel for AI assistance:</p>
+            <ul className={styles.taskList}>
+              <li>
+                <strong>Your Channel</strong>
+                <p>Go to <a href="https://discord.com/channels/998229485063245845/1463972815639281777" target="_blank" rel="noopener noreferrer">#ask-claude-cfo</a> in CFO Office</p>
+              </li>
+              <li>
+                <strong>How to Use</strong>
+                <p>Type <code>@cool</code> followed by your question or task</p>
+              </li>
+              <li>
+                <strong>Example</strong>
+                <p><code>@cool Help me analyze this budget spreadsheet</code></p>
+              </li>
+            </ul>
+          </div>
+
+          <div className={styles.card}>
             <h2>Quick Claude Prompts</h2>
             <ul className={styles.promptList}>
               <li>&quot;Create a monthly P&L statement template&quot;</li>

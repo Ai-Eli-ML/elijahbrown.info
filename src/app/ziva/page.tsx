@@ -32,6 +32,25 @@ export default function ZivaPage() {
           </div>
 
           <div className={styles.card}>
+            <h2>Ask Claude in Discord</h2>
+            <p>Use <strong>@cool</strong> in your dedicated Discord channel for AI assistance:</p>
+            <ul className={styles.taskList}>
+              <li>
+                <strong>Your Channel</strong>
+                <p>Go to <a href="https://discord.com/channels/998229485063245845/1463972757589983263" target="_blank" rel="noopener noreferrer">#ask-claude-irene</a> in Ziva&apos;s Office</p>
+              </li>
+              <li>
+                <strong>How to Use</strong>
+                <p>Type <code>@cool</code> followed by your question or task</p>
+              </li>
+              <li>
+                <strong>Example</strong>
+                <p><code>@cool Help me draft a recruitment outreach message</code></p>
+              </li>
+            </ul>
+          </div>
+
+          <div className={styles.card}>
             <h2>Quick Claude Prompts</h2>
             <ul className={styles.promptList}>
               <li>&quot;Help me understand [topic] and explain it simply&quot;</li>

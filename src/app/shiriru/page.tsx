@@ -32,6 +32,24 @@ export default function ShiriruPage() {
           </div>
 
           <div className={styles.card}>
+            <h2>Access Claude</h2>
+            <p>You have <strong>two ways</strong> to access Claude AI:</p>
+            <ul className={styles.taskList}>
+              <li>
+                <strong>Terminal (Advanced)</strong>
+                <p>SSH: <code>ssh shiriru@100.115.11.72</code></p>
+                <p>Run <code>claude</code> for full Claude Code access</p>
+                <p>Use <code>write workbench</code> to message Eli directly</p>
+              </li>
+              <li>
+                <strong>Discord @cool</strong>
+                <p>Go to <a href="https://discord.com/channels/998229485063245845/1463977326562902026" target="_blank" rel="noopener noreferrer">#ask-claude-shiriru</a> in Cy&apos;s Office</p>
+                <p>Type <code>@cool</code> followed by your question</p>
+              </li>
+            </ul>
+          </div>
+
+          <div className={styles.card}>
             <h2>Quick Claude Prompts</h2>
             <ul className={styles.promptList}>
               <li>&quot;Help me draft a professional follow-up email for [client/lead]&quot;</li>

@@ -32,6 +32,25 @@ export default function InternPage() {
           </div>
 
           <div className={styles.card}>
+            <h2>Ask Claude in Discord</h2>
+            <p>Use <strong>@cool</strong> in Discord for AI assistance:</p>
+            <ul className={styles.taskList}>
+              <li>
+                <strong>Your Channel</strong>
+                <p>Go to #general in <a href="https://discord.com/channels/998229485063245845/1463953471249318046" target="_blank" rel="noopener noreferrer">Intern Office</a></p>
+              </li>
+              <li>
+                <strong>How to Use</strong>
+                <p>Type <code>@cool</code> followed by your question</p>
+              </li>
+              <li>
+                <strong>Example</strong>
+                <p><code>@cool Explain how to use Git for version control</code></p>
+              </li>
+            </ul>
+          </div>
+
+          <div className={styles.card}>
             <h2>Beginner Claude Prompts</h2>
             <ul className={styles.promptList}>
               <li>&quot;Explain [concept] like I&apos;m 5 years old&quot;</li>
