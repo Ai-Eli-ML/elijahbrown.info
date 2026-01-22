@@ -34,6 +34,19 @@ export default function PrivatePage() {
                 </p>
                 <span className={styles.readButton}>Read Case Study &rarr;</span>
               </Link>
+
+              <Link href="/private/sphere-rocket" className={styles.caseStudyCard}>
+                <div className={styles.cardHeader}>
+                  <span className={styles.cardIcon}>&#x26D4;</span>
+                  <span className={styles.cardDate}>January 2026</span>
+                </div>
+                <h3 className={styles.cardTitle}>Sphere Rocket Contract Dispute</h3>
+                <p className={styles.cardDesc}>
+                  White Label Agreement analysis. Contract terms, evidence review,
+                  and strategic position for early termination negotiation.
+                </p>
+                <span className={styles.readButton}>View Summary &rarr;</span>
+              </Link>
             </div>
           </div>
 

@@ -47,7 +47,7 @@ export default function MarikaPage() {
             <ul className={styles.linkList}>
               <li><a href="https://claude.ai" target="_blank" rel="noopener noreferrer">Claude AI</a></li>
               <li><a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer">MCP Documentation</a></li>
-              <li><a href="https://discord.gg/cool" target="_blank" rel="noopener noreferrer">C.O.O.L. Discord</a></li>
+              <li><span>C.O.O.L. Discord (Ask Eli for invite)</span></li>
             </ul>
           </div>
         </section>
