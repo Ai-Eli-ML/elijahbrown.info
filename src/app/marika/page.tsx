@@ -51,7 +51,7 @@ export default function MarikaPage() {
           </div>
 
           <div className={styles.card}>
-            <h2>Quick Claude Prompts</h2>
+            <h2>Quick @cool Prompts</h2>
             <ul className={styles.promptList}>
               <li>&quot;Create an operations dashboard for tracking team productivity&quot;</li>
               <li>&quot;Analyze our project pipeline and identify bottlenecks&quot;</li>

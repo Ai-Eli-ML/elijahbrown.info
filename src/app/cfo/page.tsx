@@ -51,7 +51,7 @@ export default function CFOPage() {
           </div>
 
           <div className={styles.card}>
-            <h2>Quick Claude Prompts</h2>
+            <h2>Quick @cool Prompts</h2>
             <ul className={styles.promptList}>
               <li>&quot;Create a monthly P&L statement template&quot;</li>
               <li>&quot;Calculate ROI for [investment/campaign]&quot;</li>

@@ -55,7 +55,7 @@ export default function ShirenePage() {
           </div>
 
           <div className={styles.card}>
-            <h2>Quick Claude Prompts</h2>
+            <h2>Quick @cool Prompts</h2>
             <ul className={styles.promptList}>
               <li>&quot;Write Instagram captions for these 5 images about [topic]&quot;</li>
               <li>&quot;Create a social media strategy for launching [product/service]&quot;</li>

@@ -51,7 +51,7 @@ export default function InternPage() {
           </div>
 
           <div className={styles.card}>
-            <h2>Beginner Claude Prompts</h2>
+            <h2>Beginner @cool Prompts</h2>
             <ul className={styles.promptList}>
               <li>&quot;Explain [concept] like I&apos;m 5 years old&quot;</li>
               <li>&quot;Give me 5 tips for [skill]&quot;</li>

@@ -51,7 +51,7 @@ export default function ZivaPage() {
           </div>
 
           <div className={styles.card}>
-            <h2>Quick Claude Prompts</h2>
+            <h2>Quick @cool Prompts</h2>
             <ul className={styles.promptList}>
               <li>&quot;Help me understand [topic] and explain it simply&quot;</li>
               <li>&quot;Create a checklist for [task name]&quot;</li>

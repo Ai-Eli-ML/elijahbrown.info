@@ -50,7 +50,7 @@ export default function ShiriruPage() {
           </div>
 
           <div className={styles.card}>
-            <h2>Quick Claude Prompts</h2>
+            <h2>Quick @cool Prompts</h2>
             <ul className={styles.promptList}>
               <li>&quot;Help me draft a professional follow-up email for [client/lead]&quot;</li>
               <li>&quot;Create a task breakdown for [project name] with deadlines&quot;</li>
