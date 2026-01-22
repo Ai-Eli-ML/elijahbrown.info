@@ -45,7 +45,7 @@ export default function ShiriruPage() {
             <h2>Resources</h2>
             <ul className={styles.linkList}>
               <li><a href="https://claude.ai" target="_blank" rel="noopener noreferrer">Claude AI</a></li>
-              <li><span>C.O.O.L. Discord (Ask Eli for invite)</span></li>
+              <li><a href="https://discord.com/channels/998229485063245845/1441103134352216297" target="_blank" rel="noopener noreferrer">C.O.O.L. Discord - Shiriru's Office</a></li>
               <li><a href="/contact" target="_blank" rel="noopener noreferrer">Contact Eli</a></li>
             </ul>
           </div>
