@@ -1,0 +1,163 @@
+---
+title: "I Taught My AI to Remember What I Forgot"
+date: "2026-02-07"
+description: "How ADHD-driven chaos led me to build a session diary system that gives Claude Code a memory across conversations. No more 'wait, what was I working on?'"
+tags: ["AI", "Claude Code", "ADHD", "Developer Tools", "Productivity"]
+---
+
+## The Problem Nobody Talks About
+
+Here's my confession: I have ADHD and I'm building a 10-project monorepo.
+
+On any given day, I might have three Claude Code sessions open — one debugging a legal AI platform, another wiring up a blockchain poker contract, and a third refactoring a therapeutic chatbot. I bounce between them like a caffeinated electron.
+
+Then the power goes out.
+
+Or Windows decides it's update time.
+
+Or I just... close the terminal and forget which of the 47 tabs was the important one.
+
+When I reopen Claude Code the next morning, it greets me like a stranger. "Hello! How can I help you today?"
+
+**Bro, we were in the middle of something.**
+
+## The Realization
+
+I was staring at Claude's `/resume` command — which shows you the last 10 sessions, listed by date and a truncated first message — and I thought: *this is useless*.
+
+The sessions aren't named. The descriptions are the first few words I typed, usually something coherent like "fix the thing" or "continue." I have no idea which session was the one where I was halfway through migrating a database schema.
+
+And that's when it hit me: **Claude Code has hooks.**
+
+Specifically, it has a `Stop` hook — code that runs every time a session ends. And a `UserPromptSubmit` hook — code that runs every time I type something new.
+
+What if, every time a session ended, Claude automatically wrote a diary entry? A structured summary of:
+- What project was I working on?
+- What files did I touch?
+- What decisions did I make?
+- What's still pending?
+
+And then, every time I started a new session, that diary entry got *injected back in*?
+
+## Building the Session Diary
+
+I already had a session-state hook tracking basic metrics — files read, files modified, tool counts. But it was just raw data. No narrative. No "here's where you left off."
+
+So I extended it. The new `handleStop()` function now:
+
+1. **Generates a diary entry** from the session state — project name, files modified, duration, a compact context snapshot
+2. **Appends to a local `.jsonl` file** — one JSON object per session, machine-readable, instantly searchable
+3. **Prepends to a Markdown file** — human-readable, newest-first, so I can scan it like a captain's log
+4. **Pushes to Supabase** — the `session_diary` table, with RLS policies, indexed for fast queries
+
+Here's what a diary entry looks like:
+
+```json
+{
+  "session_id": "a1b2c3d4...",
+  "project": "legal-malpractice",
+  "project_name": "Legal Malpractice",
+  "summary": "Modified 8 files across backend API and frontend",
+  "files_modified": ["api/mac_routes.py", "middleware/auth.py"],
+  "files_modified_count": 8,
+  "tool_count": 47,
+  "duration_minutes": 35,
+  "git_branch": "main",
+  "ended_at": "2026-02-07T15:30:00Z"
+}
+```
+
+## The Magic: Context Injection
+
+But the diary is only half the story. The real magic is the **startup injection**.
+
+My `UserPromptSubmit` hook now reads the diary on every new session. It checks:
+- What was I last working on for *this project*?
+- What were the last 3 sessions across *all projects*?
+
+Then it injects a compact context block that Claude sees before my first message:
+
+```
+## Session Continuity
+Last session (2h ago): Legal Malpractice - Modified 8 files,
+47 tool calls, 35 min. Branch: main.
+Recent: Trading Fanatics (4h ago), Poker Platform (yesterday)
+```
+
+Now when I type "continue where we left off" — Claude actually *can*.
+
+## The Four-Phase Master Plan
+
+What started as a local hack is becoming something bigger:
+
+**Phase 1** (done): Local files + Supabase. The diary writes on exit, reads on startup. Basic continuity.
+
+**Phase 2** (next): Dashboard widget. My Personal Dashboard gets an "Active Work Streams" view showing all projects I've touched in the last 7 days, with pending tasks and last activity times.
+
+**Phase 3** (coming): Discord bot integration. My C.O.O.L. bot can answer "@cool what was I working on?" by querying the diary table. My team can see what I've been up to without me having to remember.
+
+**Phase 4** (future): AJ-AGI ingestion. My personal AI assistant (separate project, with a Soviet accent — long story) will ingest the diary into its RAG memory. Eventually, AJ will be able to say "Comrade, you left the attorney directory half-finished three days ago."
+
+## Why This Matters
+
+This isn't just a productivity hack. For developers with ADHD, **context loss is the biggest tax on our output**.
+
+We're not bad at coding. We're not bad at problem-solving. We're great at those things — when we're in flow state. The problem is the 20-minute "wait, where was I?" ritual that happens every time we switch contexts or restart.
+
+A session diary eliminates that tax. The AI remembers so you don't have to.
+
+## The Technical Bits
+
+For the nerds who want to build something similar:
+
+- **Claude Code hooks** run as shell commands on specific events (`Stop`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`)
+- The hook reads from **stdin** (JSON with session data) and outputs to **stdout** (JSON with `continue: true`)
+- I use **Supabase** with Row Level Security for the database layer
+- Local files are the source of truth — Supabase sync is fire-and-forget
+- The startup hook injects context via the `additionalContext` field in its JSON output
+- Everything has a **timeout** (1.5 seconds) — the hook must never slow down the CLI
+
+The SQL schema has views for common queries:
+
+```sql
+-- "What was I working on recently?"
+create or replace view recent_sessions as
+  select project, summary, duration_minutes, ended_at
+  from session_diary
+  where user_id = 'sxilent'
+  order by ended_at desc limit 20;
+
+-- "What projects are active this week?"
+create or replace view active_work_streams as
+  select project, count(*) as session_count,
+         sum(duration_minutes) as total_minutes,
+         max(ended_at) as last_active
+  from session_diary
+  where ended_at > now() - interval '7 days'
+  group by project order by max(ended_at) desc;
+```
+
+## The Bigger Picture
+
+I think we're entering an era where **developer tools need to understand developer brains**, not just developer code.
+
+Not everyone works in clean, linear sessions. Some of us are chaos agents who hop between projects at 2am because inspiration struck while debugging something completely unrelated.
+
+The tools should adapt to us. Not the other way around.
+
+A session diary is just the beginning. Imagine:
+- AI that knows your energy patterns and suggests which project to work on
+- Automatic priority rebalancing based on which projects have stalled
+- Cross-session refactoring suggestions ("you fixed this pattern in project A, want me to apply it to project B?")
+
+We're building towards a world where the AI isn't just a code completion engine — it's a **cognitive partner** that carries context across time.
+
+## Final Thought
+
+The best feature I've ever built was one that compensates for my own brain's weaknesses.
+
+That's not a bug. That's what tools are for.
+
+---
+
+*Building Advancing Technology — where the AI remembers what the developer forgets.*
