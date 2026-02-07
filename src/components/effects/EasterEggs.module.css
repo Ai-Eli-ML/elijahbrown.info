@@ -288,6 +288,45 @@
   }
 }
 
+/* Portal mode - secret admin redirect */
+.portalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: portalFadeIn 1s ease-in-out;
+}
+
+.portalContent {
+  text-align: center;
+  color: #00ff41;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.portalContent p {
+  font-size: var(--text-2xl);
+  text-shadow: 0 0 20px rgba(0, 255, 65, 0.8);
+  margin-bottom: var(--space-4);
+}
+
+.portalText {
+  font-size: var(--text-base) !important;
+  margin-top: 1rem;
+  opacity: 0.7;
+}
+
+@keyframes portalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ripple,
   .message,
@@ -295,7 +334,8 @@
   .konamiParticle,
   .voidOverlay,
   .matrixOverlay,
-  .matrixColumn {
+  .matrixColumn,
+  .portalOverlay {
     animation: none !important;
     opacity: 0;
   }

@@ -41,6 +41,7 @@ export default function EasterEggs() {
   const [konami, setKonami] = useState(false);
   const [voidActivated, setVoidActivated] = useState(false);
   const [matrixMode, setMatrixMode] = useState(false);
+  const [portalActivated, setPortalActivated] = useState(false);
   const konamiRef = useRef<string[]>([]);
   const typingRef = useRef<string>('');
 
@@ -137,6 +138,15 @@ export default function EasterEggs() {
         }, 5000);
         typingRef.current = '';
       }
+
+      // Check for "admin" - secret portal
+      if (typingRef.current.includes('admin')) {
+        setPortalActivated(true);
+        setTimeout(() => {
+          window.location.href = 'https://dashboard.advancingtechnology.online/login';
+        }, 2000);
+        typingRef.current = '';
+      }
     };
 
     window.addEventListener('click', handleClick);
@@ -228,6 +238,16 @@ export default function EasterEggs() {
           <div className={styles.matrixMessage}>
             <p>Wake up...</p>
             <p>The matrix has you.</p>
+          </div>
+        </div>
+      )}
+
+      {/* Portal mode - secret admin redirect */}
+      {portalActivated && (
+        <div className={styles.portalOverlay}>
+          <div className={styles.portalContent}>
+            <p>Access granted...</p>
+            <p className={styles.portalText}>Redirecting to command center</p>
           </div>
         </div>
       )}
