@@ -92,9 +92,9 @@ What started as a local hack is becoming something bigger:
 
 **Phase 1** (done): Local files + Supabase. The diary writes on exit, reads on startup. Basic continuity.
 
-**Phase 2** (next): Dashboard widget. My Personal Dashboard gets an "Active Work Streams" view showing all projects I've touched in the last 7 days, with pending tasks and last activity times.
+**Phase 2** (done): Dashboard widget. My Personal Dashboard has an "Active Work Streams" view showing all projects I've touched in the last 7 days, session counts, total time spent, and recent session details — all admin-only behind role-based access.
 
-**Phase 3** (coming): Discord bot integration. My C.O.O.L. bot can answer "@cool what was I working on?" by querying the diary table. My team can see what I've been up to without me having to remember.
+**Phase 3** (done): Discord bot integration. My C.O.O.L. bot answers "@cool what was I working on?" by querying the diary table via a `query_session_diary` tool, with a local JSONL fallback if Supabase is unreachable. My team can see what I've been up to without me having to remember.
 
 **Phase 4** (future): AJ-AGI ingestion. My personal AI assistant (separate project, with a Soviet accent — long story) will ingest the diary into its RAG memory. Eventually, AJ will be able to say "Comrade, you left the attorney directory half-finished three days ago."
 
