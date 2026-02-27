@@ -1,8 +1,43 @@
 'use client';
 
+import { useEffect } from 'react';
 import styles from './page.module.css';
 
 export default function DwaynePage() {
+  useEffect(() => {
+    // Hide site chrome on this private research page
+    const selectors = [
+      'nav',                          // Navigation bar
+      '[class*="ThemeToggle"]',        // Theme toggle
+      '[class*="ScrollProgress"]',     // Scroll progress bar
+      '[class*="ParticleBackground"]', // Particle effects
+      '[class*="CursorLight"]',        // Cursor light effect
+      '[class*="CommandPalette"]',     // Command palette trigger
+      '[class*="KeyboardShortcuts"]',  // Keyboard shortcuts
+      '[class*="AmbientSound"]',       // Ambient sound button
+      '[class*="EasterEggs"]',         // Easter eggs
+    ];
+    const hidden: HTMLElement[] = [];
+    selectors.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        const htmlEl = el as HTMLElement;
+        htmlEl.dataset.prevDisplay = htmlEl.style.display;
+        htmlEl.style.display = 'none';
+        hidden.push(htmlEl);
+      });
+    });
+    // Remove main padding (nav is hidden)
+    const main = document.querySelector('main') as HTMLElement | null;
+    if (main) main.style.paddingTop = '0';
+
+    return () => {
+      hidden.forEach(el => {
+        el.style.display = el.dataset.prevDisplay || '';
+      });
+      if (main) main.style.paddingTop = '64px';
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
