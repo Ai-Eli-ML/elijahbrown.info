@@ -120,6 +120,448 @@ export default function DwaynePage() {
             </ul>
           </div>
 
+          <h3 className={styles.wireframeSectionTitle}>Website Wireframes</h3>
+
+          <div className={styles.card}>
+            <h2>Design System</h2>
+            <dl className={styles.designSpec}>
+              <dt>Palette</dt>
+              <dd>Black (#000) background, Gold (#D4AF37) accent, White text, Dark grey (#1a1a1a) cards</dd>
+              <dt>Fonts</dt>
+              <dd>Playfair Display (serif, display headings) + Inter (sans-serif, body)</dd>
+              <dt>Inspiration</dt>
+              <dd>Beyonce.com (minimal, photo-dominant) + Joann AI Portfolio (dark + neon accent)</dd>
+            </dl>
+          </div>
+
+          <div className={styles.card}>
+            <h2>Homepage — Desktop (1440px)</h2>
+            <pre className={styles.wireframe}>{`┌──────────────────────────────────────────────────────────────┐
+│  LENNY WILLIAMS          HOME  ABOUT  MUSIC  TIMELINE  GALLERY  CONTACT │
+│  ─────────────────────────────────────────────────────────── │
+│                                                              │
+│              ┌─────────────────────────────┐                 │
+│              │                             │                 │
+│              │    [HERO: Full-viewport     │                 │
+│              │     NYC Black Coat Photo]   │                 │
+│              │                             │                 │
+│              │     ─ ─ ─ ─ ─ ─ ─ ─        │                 │
+│              │     LENNY WILLIAMS          │                 │
+│              │     ═══════════════         │                 │
+│              │     GRAMMY-NOMINATED •      │                 │
+│              │     TOWER OF POWER •        │                 │
+│              │     R&B LEGEND              │                 │
+│              │                             │                 │
+│              │         ↓ SCROLL            │                 │
+│              └─────────────────────────────┘                 │
+│                                                              │
+│──────────── HORIZONTAL SCROLL GALLERY (Beyonce-style) ──────│
+│                                                              │
+│  ┌────────┐ ┌────────┐ ┌──────────────┐ ┌────────┐ ┌──────┐│
+│  │ Photo  │ │ Photo  │ │  Photo       │ │ Photo  │ │Photo ││
+│  │ 720px  │ │ 900px  │ │  1200px      │ │ 720px  │ │800px ││
+│  │        │ │        │ │              │ │        │ │      ││
+│  └────────┘ └────────┘ └──────────────┘ └────────┘ └──────┘│
+│                                              ← swipe →      │
+│                                                              │
+│──────────── FEATURED SECTION ────────────────────────────────│
+│                                                              │
+│  ┌──────────────────────┐  ┌─────────────────────────────┐  │
+│  │ [Spotify Embed]      │  │  "When I walk on that stage, │  │
+│  │  Cause I Love You    │  │   I want to be illuminated"  │  │
+│  │  ▶ ━━━━━━━━━━━━━     │  │         — Lenny Williams     │  │
+│  └──────────────────────┘  └─────────────────────────────┘  │
+│                                                              │
+│──────────── STATS ───────────────────────────────────────────│
+│                                                              │
+│    50+ YEARS    │    16 ALBUMS    │   2x GOLD   │  HOF x2   │
+│                                                              │
+│  ┌─────────────────────┐  ┌──────────────────────┐          │
+│  │  EXPLORE DISCOGRAPHY │  │  VIEW TIMELINE       │          │
+│  └─────────────────────┘  └──────────────────────┘          │
+│                                                              │
+│──────────── FOOTER ──────────────────────────────────────────│
+│  LENNY WILLIAMS    │  NAV LINKS    │  SOCIAL / STREAMING     │
+│  ═══════════ (gold line) ═══════════════════════════════════ │
+│  © 2026 Bridle     │  Home         │  IG  Spotify  Apple    │
+│  Ridge Records     │  About...     │  X   Booking           │
+│                    │               │  Site by Advancing Tech │
+└──────────────────────────────────────────────────────────────┘`}</pre>
+          </div>
+
+          <div className={styles.card}>
+            <h2>About Page — Desktop</h2>
+            <pre className={styles.wireframe}>{`┌──────────────────────────────────────────────────────────────┐
+│  NAV BAR (fixed, mix-blend-difference)                       │
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐    │
+│  │  [70vh HERO: Standing Portrait, full-width]          │    │
+│  │                                                      │    │
+│  │          ABOUT LENNY                                 │    │
+│  └──────────────────────────────────────────────────────┘    │
+│                                                              │
+│  ┌────────────────────┐  ┌──────────────────────────────┐   │
+│  │                    │  │  "Love is what has gotten     │   │
+│  │  [60% — Seated     │  │   me through all of these    │   │
+│  │   Portrait Photo]  │  │   years."                    │   │
+│  │                    │  │        — Lenny Williams       │   │
+│  │                    │  │  ══════════════════════       │   │
+│  │                    │  │  Leonard Charles "Lenny"      │   │
+│  │                    │  │  Williams was born February   │   │
+│  │                    │  │  16, 1945 in Little Rock...   │   │
+│  │                    │  │                               │   │
+│  │                    │  │  [Full 5-paragraph bio]       │   │
+│  └────────────────────┘  └──────────────────────────────┘   │
+│                                                              │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐          │
+│  │ 50+     │ │ 16      │ │ 2x      │ │ HOF     │          │
+│  │ YEARS   │ │ ALBUMS  │ │ GOLD    │ │ x2      │          │
+│  └─────────┘ └─────────┘ └─────────┘ └─────────┘          │
+│                                                              │
+│  ══════ AWARDS & RECOGNITION ══════                          │
+│  • Arkansas Black Hall of Fame (2012)                        │
+│  • Rhythm & Blues Hall of Fame (2017)                        │
+│  • BMI Songwriters Award (2005)                              │
+│  • Honorary Doctorate — Cal State                            │
+│                                                              │
+│  ──── LEGENDARY CONNECTIONS ────                             │
+│  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐                          │
+│  │Berry│ │Kanye│ │Snoop│ │MC   │                           │
+│  │Gordy│ │West │ │Dogg │ │Hammer│                          │
+│  └─────┘ └─────┘ └─────┘ └─────┘                          │
+│  FOOTER                                                      │
+└──────────────────────────────────────────────────────────────┘`}</pre>
+          </div>
+
+          <div className={styles.card}>
+            <h2>Discography Page — Desktop</h2>
+            <pre className={styles.wireframe}>{`┌──────────────────────────────────────────────────────────────┐
+│  NAV BAR                                                     │
+│                                                              │
+│           DISCOGRAPHY                                        │
+│           Five decades of soul, R&B, and funk                │
+│                                                              │
+│  ══════ SOLO ALBUMS ══════                                   │
+│                                                              │
+│  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        │
+│  │ [Album Art]  │ │ [Album Art]  │ │ [Album Art]  │        │
+│  │              │ │  ┌──────┐    │ │  ┌──────┐    │        │
+│  │              │ │  │ GOLD │    │ │  │ GOLD │    │        │
+│  │              │ │  └──────┘    │ │  └──────┘    │        │
+│  │──────────────│ │──────────────│ │──────────────│        │
+│  │ Rise Sleep.. │ │ Choosing You │ │ Spark of Love│        │
+│  │ 1975 Motown  │ │ 1977 ABC     │ │ 1978 ABC     │        │
+│  │              │ │ #10 Disco    │ │ "Cause I     │        │
+│  │  HOVER:      │ │              │ │  Love You"   │        │
+│  │  track list  │ │              │ │              │        │
+│  └──────────────┘ └──────────────┘ └──────────────┘        │
+│                                                              │
+│  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        │
+│  │ Love Current │ │ Let's Do It  │ │ Still in the │        │
+│  │ 1979         │ │ Today 1980   │ │ Game 2012    │        │
+│  └──────────────┘ └──────────────┘ └──────────────┘        │
+│                                                              │
+│  ══════ TOWER OF POWER ══════ (dark card bg)                 │
+│                                                              │
+│  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐        │
+│  │ Tower of     │ │ Back to      │ │ Urban        │        │
+│  │ Power (1973) │ │ Oakland (74) │ │ Renewal (74) │        │
+│  └──────────────┘ └──────────────┘ └──────────────┘        │
+│                                                              │
+│  ══════ NOTABLE COLLABORATIONS ══════                        │
+│  ┌────────────────────────┐ ┌────────────────────────┐      │
+│  │ Kenny G — "Don't Make  │ │ Twista/Kanye — "Over-  │      │
+│  │ Me Wait" — 1987        │ │ night Celebrity" — 2004│      │
+│  │ #15 Hot 100            │ │ #6 Hot 100 (sample)    │      │
+│  └────────────────────────┘ └────────────────────────┘      │
+│                                                              │
+│  [Spotify Artist Embed]                                      │
+│  FOOTER                                                      │
+└──────────────────────────────────────────────────────────────┘`}</pre>
+          </div>
+
+          <div className={styles.card}>
+            <h2>Timeline Page — Desktop</h2>
+            <pre className={styles.wireframe}>{`┌──────────────────────────────────────────────────────────────┐
+│  NAV BAR                                                     │
+│                                                              │
+│           THE JOURNEY                                        │
+│           Six decades of music, soul, and legacy             │
+│                                                              │
+│                    │ (gold line)                              │
+│                    │                                         │
+│  ┌─────────────┐   ●  1945                                  │
+│  │ Born in      │   │                                        │
+│  │ Little Rock  │   │                                        │
+│  └─────────────┘   │                                         │
+│                    │                                         │
+│         1950s  ●   │   ┌─────────────┐                      │
+│                │   │   │ Family moves│                       │
+│                │   │   │ to Oakland  │                       │
+│                    │   └─────────────┘                       │
+│                    │                                         │
+│  ┌─────────────┐   ●  1972                                  │
+│  │ Joins Tower │   │                                        │
+│  │ of Power    │   │                                        │
+│  │ [Photo]     │   │                                        │
+│  └─────────────┘   │                                         │
+│                    │                                         │
+│         1978   ●   │   ┌─────────────┐                      │
+│                │   │   │ "Cause I    │                       │
+│                │   │   │ Love You"   │                       │
+│                │   │   │ goes GOLD   │                       │
+│                    │   └─────────────┘                       │
+│                    │                                         │
+│       ... continues through 2026 ...                         │
+│                    │                                         │
+│                    ●  END                                    │
+│           "Love is what has gotten me through"               │
+│                                                              │
+│  FOOTER                                                      │
+└──────────────────────────────────────────────────────────────┘`}</pre>
+          </div>
+
+          <div className={styles.card}>
+            <h2>Gallery Page — Desktop</h2>
+            <pre className={styles.wireframe}>{`┌──────────────────────────────────────────────────────────────┐
+│  NAV BAR                                                     │
+│                                                              │
+│           GALLERY                                            │
+│                                                              │
+│  [ALL] [PORTRAIT] [PERFORMANCE] [LEGENDS] [VINTAGE]         │
+│   ^^^gold underline on active filter                         │
+│                                                              │
+│  ┌──────────────┐ ┌────────┐ ┌──────────────────────┐      │
+│  │              │ │        │ │                      │      │
+│  │  [Photo 1]   │ │[Pho 2] │ │  [Photo 3 — wide]   │      │
+│  │  tall        │ │ square │ │                      │      │
+│  │              │ │        │ │                      │      │
+│  │              │ └────────┘ └──────────────────────┘      │
+│  │              │ ┌────────────────────┐                    │
+│  └──────────────┘ │  [Photo 4]         │                    │
+│  ┌────────────┐   │                    │  ┌────────┐        │
+│  │ [Photo 5]  │   └────────────────────┘  │[Pho 6] │        │
+│  │            │   ┌────────┐ ┌──────────┐ │        │        │
+│  └────────────┘   │[Pho 7] │ │[Photo 8] │ └────────┘        │
+│                   └────────┘ └──────────┘                    │
+│                                                              │
+│  ← MASONRY GRID — varying heights, CSS columns →            │
+│  Hover: caption overlay with name + description              │
+│  Click: opens LIGHTBOX modal                                 │
+│                                                              │
+│  FOOTER                                                      │
+└──────────────────────────────────────────────────────────────┘`}</pre>
+          </div>
+
+          <div className={styles.card}>
+            <h2>Contact Page — Desktop</h2>
+            <pre className={styles.wireframe}>{`┌──────────────────────────────────────────────────────────────┐
+│  NAV BAR                                                     │
+│                                                              │
+│           GET IN TOUCH                                       │
+│                                                              │
+│  ┌─────────────────────┐  ┌──────────────────────────────┐  │
+│  │  BOOKING & PRESS    │  │  CONTACT FORM                │  │
+│  │  ═══════════════    │  │                              │  │
+│  │  For bookings,      │  │  Name: [__________________]  │  │
+│  │  press inquiries,   │  │                              │  │
+│  │  and appearances    │  │  Email: [_________________]  │  │
+│  │                     │  │                              │  │
+│  │  ┌───────────────┐  │  │  Subject: [▼ Booking______]  │  │
+│  │  │ VIEW EPK →    │  │  │                              │  │
+│  │  └───────────────┘  │  │  Message:                    │  │
+│  │                     │  │  ┌────────────────────────┐  │  │
+│  │  BRIDLE RIDGE       │  │  │                        │  │  │
+│  │  RECORDS            │  │  │                        │  │  │
+│  │  Lenny's own label  │  │  └────────────────────────┘  │  │
+│  │                     │  │                              │  │
+│  │  SOCIAL:            │  │  ┌──────────────────────┐    │  │
+│  │  IG  X  FB          │  │  │   SEND MESSAGE →     │    │  │
+│  │                     │  │  └──────────────────────┘    │  │
+│  │  STREAMING:         │  │                              │  │
+│  │  Spotify Apple      │  │                              │  │
+│  └─────────────────────┘  └──────────────────────────────┘  │
+│                                                              │
+│  FOOTER                                                      │
+└──────────────────────────────────────────────────────────────┘`}</pre>
+          </div>
+
+          <h3 className={styles.wireframeSectionTitle}>Mobile Wireframes (375px)</h3>
+
+          <div className={styles.card}>
+            <h2>Homepage — Mobile</h2>
+            <pre className={styles.wireframe}>{`┌──────────────────────┐
+│ ☰  LENNY WILLIAMS    │
+│─────────────────────│
+│                      │
+│ ┌──────────────────┐ │
+│ │                  │ │
+│ │  [HERO PHOTO]    │ │
+│ │  Full viewport   │ │
+│ │                  │ │
+│ │  LENNY           │ │
+│ │  WILLIAMS        │ │
+│ │  ═══════         │ │
+│ │  GRAMMY-NOM •    │ │
+│ │  TOWER OF POWER  │ │
+│ │  • R&B LEGEND    │ │
+│ │                  │ │
+│ │      ↓           │ │
+│ └──────────────────┘ │
+│                      │
+│ ← HORIZONTAL SCROLL →│
+│ ┌─────┐┌─────┐┌────┐│
+│ │Photo││Photo││Pho ││
+│ └─────┘└─────┘└────┘│
+│                      │
+│ ┌──────────────────┐ │
+│ │ [Spotify Embed]  │ │
+│ │  Cause I Love U  │ │
+│ └──────────────────┘ │
+│                      │
+│ "When I walk on      │
+│  that stage, I want  │
+│  to be illuminated"  │
+│                      │
+│ 50+ YEARS | 16 ALBUMS│
+│ 2x GOLD   | HOF x2  │
+│                      │
+│ [EXPLORE DISCOGRAPHY]│
+│ [VIEW TIMELINE      ]│
+│                      │
+│ FOOTER (stacked)     │
+└──────────────────────┘`}</pre>
+          </div>
+
+          <div className={styles.card}>
+            <h2>Navigation — Mobile (Hamburger Open)</h2>
+            <pre className={styles.wireframe}>{`┌──────────────────────┐
+│ ✕  LENNY WILLIAMS    │
+│                      │
+│                      │
+│      HOME            │
+│      ────            │
+│      ABOUT           │
+│                      │
+│      MUSIC           │
+│                      │
+│      TIMELINE        │
+│                      │
+│      GALLERY         │
+│                      │
+│      CONTACT         │
+│                      │
+│                      │
+│   IG  Spotify  Apple │
+│                      │
+└──────────────────────┘
+ (full-screen overlay,
+  black bg, gold accent
+  on active link)`}</pre>
+          </div>
+
+          <div className={styles.card}>
+            <h2>About — Mobile</h2>
+            <pre className={styles.wireframe}>{`┌──────────────────────┐
+│ ☰  LENNY WILLIAMS    │
+│─────────────────────│
+│                      │
+│ ┌──────────────────┐ │
+│ │ [HERO PORTRAIT]  │ │
+│ │  50vh            │ │
+│ │                  │ │
+│ │  ABOUT LENNY     │ │
+│ └──────────────────┘ │
+│                      │
+│ ┌──────────────────┐ │
+│ │ [SEATED PHOTO]   │ │
+│ │  Full width      │ │
+│ └──────────────────┘ │
+│                      │
+│ "Love is what has    │
+│  gotten me through"  │
+│  — gold pull quote   │
+│                      │
+│ [Full bio text,      │
+│  single column,      │
+│  5 paragraphs]       │
+│                      │
+│ ┌────┐┌────┐        │
+│ │50+ ││16  │        │
+│ │YRS ││ALB │        │
+│ └────┘└────┘        │
+│ ┌────┐┌────┐        │
+│ │GOLD││HOF │        │
+│ │ x2 ││ x2 │        │
+│ └────┘└────┘        │
+│                      │
+│ AWARDS (stacked)     │
+│ CELEBRITIES (scroll) │
+│ FOOTER               │
+└──────────────────────┘`}</pre>
+          </div>
+
+          <div className={styles.card}>
+            <h2>Timeline — Mobile</h2>
+            <pre className={styles.wireframe}>{`┌──────────────────────┐
+│ ☰  LENNY WILLIAMS    │
+│─────────────────────│
+│                      │
+│   THE JOURNEY        │
+│                      │
+│  │ (gold line, left) │
+│  │                   │
+│  ● 1945              │
+│  │ ┌───────────────┐ │
+│  │ │Born in Little  │ │
+│  │ │Rock, Arkansas  │ │
+│  │ └───────────────┘ │
+│  │                   │
+│  ● 1972              │
+│  │ ┌───────────────┐ │
+│  │ │Joins Tower of │ │
+│  │ │Power          │ │
+│  │ │[Photo]        │ │
+│  │ └───────────────┘ │
+│  │                   │
+│  ● 1978              │
+│  │ ┌───────────────┐ │
+│  │ │Spark of Love  │ │
+│  │ │goes GOLD      │ │
+│  │ └───────────────┘ │
+│  │                   │
+│  ... continues ...   │
+│                      │
+│ FOOTER               │
+└──────────────────────┘
+ (single-column timeline
+  on mobile — all entries
+  right-aligned from the
+  gold line on left edge)`}</pre>
+          </div>
+
+          <div className={styles.card}>
+            <h2>Navigation Flow</h2>
+            <pre className={styles.wireframe}>{`                    ┌──────────┐
+            ┌───── │ HOMEPAGE │ ─────┐
+            │      └────┬─────┘      │
+            │           │            │
+     ┌──────┴──┐  ┌─────┴────┐  ┌───┴──────┐
+     │  ABOUT  │  │DISCOGRAPHY│  │ TIMELINE │
+     └─────────┘  └──────────┘  └──────────┘
+            │           │            │
+     ┌──────┴──┐  ┌─────┴────┐
+     │ GALLERY │  │ CONTACT  │
+     └─────────┘  └──────────┘
+
+  All pages accessible from fixed nav bar.
+  Homepage has CTA links to Discography + Timeline.
+  About page links to Gallery (celebrity photos).
+  Contact has EPK external link.`}</pre>
+          </div>
+
+          <h3 className={styles.wireframeSectionTitle}>Documents</h3>
+
           <div className={styles.card}>
             <h2>Project Sing — Concept Document</h2>
             <p style={{ marginBottom: '1rem' }}>
