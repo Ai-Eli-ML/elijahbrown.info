@@ -59,6 +59,11 @@ const PROTECTED_PAGES = {
     cookieName: 'shirene-auth',
     loginPath: '/shirene/login',
   },
+  dwayne: {
+    password: 'skhy',
+    cookieName: 'dwayne-auth',
+    loginPath: '/dwayne/login',
+  },
 };
 
 export function middleware(request: NextRequest) {
@@ -102,6 +107,9 @@ export function middleware(request: NextRequest) {
   } else if (pathname.startsWith('/shirene')) {
     pageConfig = PROTECTED_PAGES.shirene;
     pageName = 'shirene';
+  } else if (pathname.startsWith('/dwayne')) {
+    pageConfig = PROTECTED_PAGES.dwayne;
+    pageName = 'dwayne';
   }
 
   // Not a protected route
@@ -157,5 +165,6 @@ export const config = {
     '/intern/:path*',
     '/cfo/:path*',
     '/shirene/:path*',
+    '/dwayne/:path*',
   ],
 };
