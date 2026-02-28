@@ -12,6 +12,7 @@ export default function Navigation() {
     { href: '/about', label: 'About' },
     { href: '/projects', label: 'Projects' },
     { href: '/blog', label: 'Blog' },
+    { href: '/ai', label: 'AI' },
     { href: '/contact', label: 'Contact' },
   ];
 
