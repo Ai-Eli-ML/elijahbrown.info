@@ -1,0 +1,268 @@
+---
+title: "How I Debug a Production AI Receptionist at 2 AM"
+date: "2026-03-14"
+description: "Real patients were losing messages. The AI was telling people 'we're open' at 7 PM. The intercept button did nothing. Here's the 2 AM debugging session that fixed it all."
+tags: ["AI", "ElevenLabs", "Debugging", "Voice AI", "EJW Voice", "Production", "Twilio"]
+---
+
+*Based on real bugs. Dramatized for narrative purposes. Names, timestamps, and the amount of coffee consumed have been altered. The 401 errors were very real.*
+
+## The Thing About Production
+
+There is a specific flavor of dread that hits you when you realize your AI is losing patient messages at a medical practice.
+
+Not "test user messages." Not "placeholder data." Real human beings calling a real doctor's office in rural North Carolina, asking about their Medicare Advantage plan or requesting a potassium prescription refill, and the system is just... swallowing their words into the void.
+
+I discovered this at about 1:45 AM on a Thursday. I was supposed to be winding down. Instead, I pulled open the call logs for EJW Voice -- the AI receptionist I've been building with ElevenLabs and Twilio -- and found a graveyard.
+
+Let me explain what EJW Voice is, and then I'll tell you about the five bugs that almost killed it.
+
+## What EJW Voice Actually Does
+
+EJW Voice is an AI phone receptionist. You call a business phone number. Instead of hold music or a voicemail box, an AI agent picks up, has a natural conversation with you, figures out what you need, and either answers your question, takes a message for the staff, or transfers you to the right person.
+
+The first real client is an urgent care clinic in North Carolina. Real patients. Real medical context. Real stakes.
+
+The stack is ElevenLabs for the conversational AI voice agent, Twilio for the phone infrastructure, Supabase for the backend, and a Next.js dashboard where the practice owner can see call logs, read messages, and intercept live calls.
+
+It was working great in testing. Of course it was working great in testing. Testing is where hope goes to feel validated before production murders it.
+
+## Bug 1: Messages Vanishing Into the Void
+
+Here is what happened to a caller.
+
+The caller called the practice about his Medicare Advantage plan. The AI picked up. It was polite. It collected his name, his phone number, his reason for calling. The caller explained his situation. The AI said "Let me save that message for the staff."
+
+Then silence. Then: "I'm having trouble saving your message right now."
+
+The caller hung up. His message -- his name, his number, his Medicare question -- gone. Four null entries in the database. A ghost of a call that existed only as a failed webhook log.
+
+Then another caller called. She needed a potassium prescription refill. Urgent, according to her. The AI did the same dance: collected everything, tried to save, failed, apologized. She had to call back during business hours and talk to a human anyway.
+
+At 2 AM, staring at the Vercel logs, I found the smoking gun:
+
+```
+23:47:42 POST /api/voice/take-message 401
+23:47:43 POST /api/voice/take-message 401
+23:47:44 POST /api/voice/take-message 401
+23:47:45 POST /api/voice/take-message 401
+23:47:46 POST /api/voice/take-message 401
+```
+
+Five 401s. Unauthorized. In a row. The URL was correct -- we had already fixed a URL routing bug the day before. But every single message-save request was getting rejected at the door.
+
+Here's what happened: our take-message endpoint required a secret key for authentication. Standard practice. We passed it via a custom HTTP header called `X-Webhook-Secret`. This works perfectly when you're calling the endpoint directly.
+
+But ElevenLabs doesn't let you set custom headers on webhook tool calls. It strips them. Every custom header you configure gets silently dropped before the request reaches your server. Your endpoint sees an unauthenticated request and does exactly what it should do: reject it.
+
+The fix was embarrassingly simple. Instead of sending the secret in the header, we sent it in the request body as a `constant_value` parameter -- which ElevenLabs *does* preserve. Then we updated the endpoint to check the body first, header second:
+
+```typescript
+// Before: header only (broken with ElevenLabs)
+const secret = req.headers['x-webhook-secret'];
+
+// After: body first, header fallback
+const secret = body?.webhook_secret || req.headers['x-webhook-secret'];
+
+if (secret !== process.env.WEBHOOK_SECRET) {
+  return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+}
+```
+
+Three lines. a caller's Medicare question died because of three lines.
+
+## Bug 2: "We're Open Until 5:30!" (It Was 7 PM)
+
+Picture this: it's 7 PM on a Tuesday. The practice closed at 5:30. A patient calls. The AI picks up and cheerfully announces: "We're open today until 5:30 PM! How can I help you?"
+
+The patient, reasonably, thinks: "Great, they're still open for another..." wait. It's 7 PM. What?
+
+The AI had time-awareness instructions in its system prompt. It knew the business hours. It had access to the current time. The prompt explicitly said to check whether it's currently before or after closing time and respond accordingly.
+
+But here's the thing about large language models and system prompts: **position matters**. There's a well-documented phenomenon where LLMs pay disproportionate attention to content at the beginning and end of their system prompt, and tend to skim or deprioritize content in the middle. Researchers call it the "lost in the middle" effect.
+
+Guess where the after-hours check was? Right in the middle. Sandwiched between greeting instructions and message-taking procedures. The model would sometimes follow it. Sometimes not. At 7 PM, it looked at the hours, saw "5:30 PM" as a piece of information, and helpfully reported it without actually comparing it to the current time.
+
+The fix was structural, not logical. I moved the after-hours detection to the very last section of the system prompt -- the "guardrails position" where models are most compliant -- and reworded it as an imperative:
+
+```
+=== MANDATORY: DO THIS FIRST ON EVERY CALL ===
+
+Before saying ANYTHING else, check the current time against business hours.
+If the current time is AFTER today's closing time or BEFORE today's opening time,
+you MUST immediately inform the caller that the office is currently CLOSED.
+Do NOT recite the business hours as if they are open.
+Say: "Thank you for calling [business]. We're actually closed right now.
+Our next available hours are [next opening time]."
+
+Then offer to take a message.
+```
+
+I tested it by calling at 9 PM. The AI picked up and said: "Thank you for calling. We're actually closed right now. We'll be open again tomorrow at 8 AM. Would you like me to take a message for the staff?"
+
+Beautiful. The exact same underlying logic, just repositioned so the model actually obeys it. Prompt engineering is 50% psychology, 50% interior decorating.
+
+## Bug 3: The Intercept Button That Called Nobody
+
+This one hurt because it was a feature we were proud of.
+
+The dashboard has a live call view. When a call comes in, the owner can see it in real time: who's calling, what they're saying, how long the call has been going. And there's an "Intercept" button. Click it, and theoretically, the AI gracefully transfers the call to the owner's phone. He picks up, talks to the patient directly, everyone's happy.
+
+In practice, he clicked Intercept, the AI said "Let me transfer you now," the call ended, and his phone never rang.
+
+Just... nothing. The AI hung up. The patient heard a click and then silence. He sat there staring at his phone like it had betrayed him.
+
+The root cause was an identity crisis in our database.
+
+When a call comes in through ElevenLabs, the system generates a conversation ID that looks like `conv_abc123xyz`. We were storing this ID in the `twilio_call_sid` field of our calls table. Seemed reasonable -- it's the call identifier, right?
+
+Wrong. Twilio has its own Call SID format: `CA` followed by 32 hex characters. When the intercept function fires, it calls the Twilio API to redirect the call:
+
+```typescript
+await twilioClient.calls(callSid).update({
+  url: interceptUrl,
+  method: 'POST',
+});
+```
+
+But we were passing `conv_abc123xyz` as the `callSid`. Twilio looked at that, said "I have no idea what this is," and silently failed. No error thrown. No exception. Just a quiet refusal to do anything.
+
+The fix was a translation layer. When the SID starts with `conv_`, we know it's an ElevenLabs conversation ID, not a Twilio Call SID. So we call the ElevenLabs API to fetch the conversation metadata, which includes the *real* Twilio Call SID that ElevenLabs used under the hood:
+
+```typescript
+async function resolveCallSid(storedSid: string): Promise<string> {
+  // If it's already a Twilio SID, use it directly
+  if (storedSid.startsWith('CA')) {
+    return storedSid;
+  }
+
+  // It's an ElevenLabs conversation ID — resolve the real Twilio SID
+  if (storedSid.startsWith('conv_')) {
+    const conversation = await elevenLabsClient.getConversation(storedSid);
+    const twilioSid = conversation.metadata?.twilio_call_sid;
+
+    if (!twilioSid) {
+      throw new Error('Could not resolve Twilio SID from ElevenLabs conversation');
+    }
+
+    return twilioSid;
+  }
+
+  throw new Error(`Unknown SID format: ${storedSid}`);
+}
+```
+
+Now the intercept actually intercepts. The owner clicks the button, his phone rings, the patient gets transferred. The way it was always supposed to work.
+
+## Bug 4: Team Invites That Create Competitors
+
+This bug was my favorite because it was so perfectly, absurdly wrong.
+
+The owner wanted to invite his receptionist to the dashboard so she could see call logs and manage messages. He went to the team settings page, typed her email, clicked "Send Invite." She got the email, clicked the link, signed up...
+
+...and created her own business called "a competing clinic."
+
+Not joined the practice owner's practice. Created a *competing practice* in the system. With its own settings, its own call logs, its own everything. The receptionist was now, according to our database, the proud owner and sole operator of a competing clinic, completely separate from the actual practice.
+
+Where did the name come from? The signup form had a placeholder value in the business name field: "Riverside Medical Group." She, being a normal person who doesn't scrutinize placeholder text, typed over it with something that seemed right and hit submit.
+
+The invite acceptance flow was routing new users to the standard signup page, which *always* creates a new business as part of onboarding. Makes sense for new customers. Makes zero sense for someone who's joining an existing team.
+
+The fix was an `inviteOnly` parameter on the signup flow:
+
+```typescript
+// Invite link now includes the flag
+const inviteUrl = `${baseUrl}/auth/signup?inviteOnly=1&token=${inviteToken}`;
+
+// Signup page checks for it
+if (searchParams.get('inviteOnly') === '1') {
+  // Hide business name, business type, phone number fields
+  // Skip business creation entirely
+  // After signup, automatically accept the invite and join the existing team
+}
+```
+
+The receptionist's accidental medical practice empire has been dissolved. She's now properly a team member of the actual practice.
+
+## Bug 5: The RLS Catch-22
+
+This was the most intellectually satisfying bug of the night. A genuine logical paradox baked into the database.
+
+Supabase uses Row Level Security (RLS) to control who can read what. Our `team_members` table had a policy that said: "You can only see rows where `user_id` matches your authenticated user ID."
+
+Sounds reasonable. You should only see your own team memberships.
+
+But here's the problem: when you receive a team invite, the row exists in `team_members` with your *email* in the `email` field and `NULL` in the `user_id` field. The `user_id` only gets populated *after* you accept the invite.
+
+So when the receptionist clicks the invite link and the page tries to load the invite details... it queries `team_members` for her record. The RLS policy checks: does `user_id` equal the authenticated user? Well, `user_id` is `NULL`. And `NULL` doesn't equal anything. Not even itself. That's how SQL works.
+
+**You can't read the invite to accept it because you haven't accepted it yet. And you can't accept it because you can't read it.**
+
+A perfect catch-22, enforced at the database level.
+
+The fix was adding an email-based RLS policy that runs alongside the existing one:
+
+```sql
+-- Existing policy: see your own memberships
+CREATE POLICY "Users can view own memberships"
+  ON team_members FOR SELECT
+  USING (user_id = auth.uid());
+
+-- New policy: see invites addressed to your email
+CREATE POLICY "Users can view their pending invites"
+  ON team_members FOR SELECT
+  USING (
+    email = (SELECT email FROM auth.users WHERE id = auth.uid())
+    AND status = 'pending'
+  );
+```
+
+Now the invite page loads. The accept button works. The `user_id` gets populated. The original policy takes over. Harmony restored.
+
+## The Meta-Lesson
+
+At about 4 AM, five bugs deep, running on caffeine and spite, I realized something.
+
+All five bugs had the same root cause. Not the same *technical* root cause -- those were all different. The same *structural* root cause:
+
+**The system was built for one architecture but deployed on another.**
+
+The webhook authentication was built for direct HTTP calls but deployed through ElevenLabs, which strips custom headers. The after-hours logic was built for text-based reasoning but deployed to a voice LLM, which processes prompt sections with different priority weights. The call intercept was built for Twilio-native calls but deployed through ElevenLabs, which uses different identifiers. The team invite was built for existing users but deployed to new users who need to sign up first. The RLS policy was built for accepted members but needed to work for pending invites.
+
+Every single bug was a gap between the world we built for and the world we shipped into.
+
+This isn't a testing failure. We tested all of these features. They all worked. In the environment we tested them in. With the assumptions we tested them under.
+
+Production doesn't care about your assumptions. Production has a caller calling about Medicare at 6 PM and another caller needing a potassium refill and the receptionist accidentally starting a medical practice because you left a placeholder in a form field.
+
+## What Production Teaches You
+
+Here is what I know now that I didn't know 24 hours ago:
+
+**1. Every integration is a trust boundary.** When you hand data to an external service -- ElevenLabs, Twilio, whatever -- you lose control of things you thought were guaranteed. Headers get stripped. IDs get translated. Formats change. Test every assumption at the boundary.
+
+**2. LLM prompt position is architecture, not style.** Where you put instructions in a system prompt isn't a writing preference. It's a design decision with reliability implications. Critical instructions go at the end. Non-negotiable directives get their own section with aggressive formatting.
+
+**3. SQL NULL is not "empty." It's "unknown."** And unknown does not equal unknown. If your RLS policies use equality checks, NULL values will silently exclude rows. Always have a fallback path for NULL states.
+
+**4. The happy path is a lie.** Or rather, it's one path among thousands. Your system needs to handle the invite that goes to a new user, not just the existing one. The call that comes from ElevenLabs, not just raw Twilio. The caller at 7 PM, not just 2 PM.
+
+**5. Silent failures are worse than loud crashes.** Twilio didn't throw an error when we gave it a fake SID. It just did nothing. The intercept button didn't show an error message. It just didn't work. Always prefer a loud failure over a silent one. At least with a crash, you know something's wrong.
+
+## The Part Where I Get Sentimental
+
+It's almost 5 AM now. Every bug is fixed. The message-taking works -- I called in myself and left a test message and watched it appear in the dashboard in real time. The after-hours logic is bulletproof. The intercept button actually intercepts. The receptionist is a team member, not a business owner. The invite flow handles new users gracefully.
+
+And you know what? a caller is going to call back. He's going to ask about his Medicare Advantage plan. And this time, the AI is going to take his message, save it properly, and it's going to be sitting in the dashboard when the staff arrives at 8 AM.
+
+That's why I do this at 2 AM. Not because I'm a masochist (okay, partially). But because somewhere in North Carolina, there's an urgent care practice that trusted us to answer their phones. Real patients with real medical questions deserve a system that works, not one that "worked in testing."
+
+Production is where your assumptions die. And that's a good thing. Because the product that survives production is the product that actually helps people.
+
+Now if you'll excuse me, I need to sleep. For approximately four hours. Before the next bug finds me.
+
+---
+
+*Building EJW Voice -- an AI receptionist that answers phones for businesses. Currently in production at one medical practice. Currently keeping me up at night. Currently worth it.*
+
+*Follow the journey at [elijahbrown.info](https://elijahbrown.info) or don't. Either way, I'll be here at 2 AM fixing things.*
