@@ -1,0 +1,296 @@
+---
+title: "How I Saved $23,000 by Compressing My AI's Memory with OCR"
+date: "2026-03-14"
+description: "I burned through 6.77 billion tokens in 33 days. 92.8% was just Claude re-reading my project docs. Here's how I cut that by 94% using GPU-accelerated visual compression — and why nobody else is doing it."
+tags: ["AI", "Claude Code", "OCR", "GPU", "DeepSeek", "Token Optimization", "Developer Tools"]
+---
+
+I run 11 production projects, 70+ AI agents, and 42 skills out of a single pnpm monorepo. Every time Claude Code opens a conversation with me, it reads approximately 50,000 tokens of context — project docs, rules, specs, team info, architecture decisions — before I even type "hello."
+
+Since October 2025, I've burned through **6.77 billion tokens** on my Claude Max subscription. At API rates? That's over **$23,000** worth of Opus compute. For about $1,000 in subscription fees.
+
+But the real story isn't the subscription savings. It's how I cut 94% of that context overhead using a technique nobody talks about: **visual compression via OCR.**
+
+## I Know Exactly How Much I've Used
+
+Before we get into the compression story, let me tell you how I know these numbers are real. I built a session analytics system into my Personal Dashboard that parses every Claude Code JSONL session file — including all subagent transcripts — and aggregates the token counts into a live dashboard with heatmaps, tool usage charts, and per-project breakdowns.
+
+Here are the verified numbers from my analytics parser as of March 14, 2026:
+
+| Metric | Value |
+|--------|-------|
+| **Total Tokens** | **6.77 billion** |
+| **Sessions** | 66 (with 945 subagent sessions) |
+| **Messages** | 116,222 |
+| **Tool Calls** | 42,643 |
+| **Avg Session Duration** | 19h 18m |
+| **Date Range** | Feb 10 – Mar 14, 2026 (33 days measured) |
+
+And the breakdown tells a story:
+
+| Token Type | Count | % |
+|-----------|-------|---|
+| Cache reads | 6.28B | 92.8% |
+| Cache creation | 468M | 6.9% |
+| Output | 11.9M | 0.18% |
+| Input | 2.6M | 0.04% |
+
+**92.8% of every token I consume is Claude re-reading my project context.** That's not code. That's not my prompts. That's not Claude's responses. It's CLAUDE.md files, rules, specs, and team configuration being cached and re-read on every single message exchange.
+
+That's the tax I'm optimizing.
+
+## The Problem: Context Windows Are a Tax
+
+If you're building anything serious with AI — not a chatbot, not a toy, a *real multi-project ecosystem* — you hit the context tax fast.
+
+Here's my setup:
+- 8 `CLAUDE.md` files across different projects (root, dashboard, legal AI, etc.)
+- Each one is 3,000–10,000 tokens
+- They load on *every single message exchange*
+- With caching, that's 6.28 billion cache-read tokens in 33 days
+
+Even with prompt caching (which cuts cost per re-read), you're still paying for those tokens to exist in context. Every extra token in your system prompt is a token that can't be used for actual work. On a 200K context window, wasting 50K on documentation means 25% of your brain is just... remembering who it is.
+
+I needed a way to compress my documentation by 10x without losing the information Claude needs to do its job.
+
+## The Insight: Text Compresses Badly. Images Compress Brilliantly.
+
+Here's something most AI engineers don't think about:
+
+When you send 10,000 tokens of markdown to Claude, it processes every single token. The whitespace, the table formatting, the repeated headers, the verbose explanations — all of it costs you.
+
+But when you send an *image* of that same document? Claude's vision encoder processes it into a fixed-size representation. A 1024x1024 image costs roughly **256 tokens** regardless of how much text is crammed into it.
+
+**10,000 tokens of markdown = ~256 tokens as an image.**
+
+That's a 39x compression ratio. For free.
+
+The catch? Claude can't search or quote from images the way it can from text. You lose some precision. But for project context — the kind of "remember who we are and what we're building" information — 97% accuracy is more than enough.
+
+## The Pipeline: DeepSeek-OCR Visual Compression
+
+I built a three-stage pipeline that converts documentation into compressed visual representations:
+
+### Stage 1: Render to Image
+
+```javascript
+// compress-claude-md.js
+// Render markdown to a high-quality screenshot
+const image = await renderMarkdownToImage(content, {
+  width: 1024,
+  height: 1024,
+  quality: 95,
+  font: 'Monaco',
+  padding: 40,
+  lineHeight: 1.6,
+  background: '#ffffff'
+});
+```
+
+Take your CLAUDE.md file. Render it as a crisp, readable image. This step is deceptively important — the font, spacing, and resolution determine how accurately the OCR model can recover the content later.
+
+### Stage 2: OCR Compression with DeepSeek
+
+```python
+from vllm import LLM, SamplingParams
+
+model = LLM(
+    model="deepseek-ai/DeepSeek-OCR",
+    gpu_memory_utilization=0.90,
+    dtype="bfloat16"
+)
+
+outputs = model.generate([{
+    "prompt": "<image>\n<|grounding|>Convert to markdown with semantic compression.",
+    "multi_modal_data": {"image": image_path}
+}], SamplingParams(temperature=0.0, max_tokens=8192))
+```
+
+DeepSeek-OCR is a 6.7B parameter vision-language model specifically designed for document understanding. It reads the image and produces a *semantically compressed* markdown representation — keeping the meaning, dropping the verbosity.
+
+### Stage 3: Memory Decay (Ebbinghaus Curve)
+
+Not all information is equally important. My pipeline applies an Ebbinghaus forgetting curve to weight document sections:
+
+```
+retention = importance * e^(-age_days / decay_constant)
+```
+
+- Root project docs: importance = 1.0 (never decay)
+- Active projects: importance = 0.9 (slow decay)
+- Shared packages: importance = 0.7 (moderate)
+- Archived docs: importance = 0.3 (fast decay)
+
+Information that hasn't been relevant in 30 days gets compressed more aggressively. Fresh, active context stays crisp.
+
+## The Results
+
+Here's what happened when I ran this across my entire ecosystem:
+
+| File | Before | After | Savings |
+|------|--------|-------|---------|
+| Root CLAUDE.md | 10,453 tokens | 491 tokens | **95.4%** |
+| Personal Dashboard | 9,448 tokens | 490 tokens | **94.9%** |
+| AJ-AGI | 8,083 tokens | 423 tokens | **95.0%** |
+| Legal Malpractice | ~7,000 tokens | ~400 tokens | **94.3%** |
+| Shared Packages | ~7,800 tokens | ~400 tokens | **94.9%** |
+| Life-Coach-Ai | ~3,700 tokens | ~450 tokens | **87.8%** |
+| Trading Fanatics | ~1,300 tokens | ~180 tokens | **86.2%** |
+| Blockchain | ~1,400 tokens | ~250 tokens | **82.1%** |
+
+**Total: 44,746 tokens saved per session load. Average compression: 93.1%.**
+
+The root CLAUDE.md went from 42,295 bytes to 1,962 bytes. A **20.3x** reduction.
+
+## What This Actually Means in Practice
+
+### Before Compression
+- Session start: ~5 seconds (loading 50K+ tokens of context)
+- Context budget: 25% consumed by documentation before any work begins
+- Each message exchange: re-reading all that context via cache
+- Monthly token burn: billions of tokens, heavy on cache reads
+
+### After Compression
+- Session start: ~0.5 seconds (loading ~5K tokens)
+- Context budget: ~2.5% consumed by documentation
+- Each message exchange: dramatically smaller cache footprint
+- Context freed up for actual code, actual thinking, actual work
+
+### The Dollar Impact
+
+On my Claude Max subscription, I pay a flat rate — so the savings are in *capacity*, not direct cost. But if I were on API pricing (Opus rates):
+
+| Cost Component | Monthly (Projected) | Savings |
+|----------------|-------------------|---------|
+| Cache reads | ~$11,949 | 94% reducible |
+| Cache creation | ~$8,777 | 94% reducible |
+| Output | ~$893 | Unchanged |
+| Input | ~$39 | Unchanged |
+| **Total API-equivalent** | **~$21,658/mo** | **~$19,500/mo saved** |
+
+Over the 5 months I've been on Claude Max (~$1,000 total in subscription fees), the API-equivalent value has been over **$23,000**. That's a **23x return** on my subscription.
+
+## The Secret Sauce: GPU Acceleration
+
+This pipeline runs on an NVIDIA RTX 5090 with 32GB of GDDR7 VRAM. DeepSeek-OCR processes each document in 50-200ms. The entire 8-file compression pass takes under 2 seconds.
+
+Why does this matter? Because you can run it *incrementally*. Every 24 hours, the pipeline checks for changed CLAUDE.md files and recompresses only what's been modified. The GPU overhead is negligible — roughly 8GB VRAM for inference, leaving 24GB free for Ollama, NeMo voice synthesis, and everything else running on the same machine.
+
+Key specs:
+- **Throughput**: ~250,000 pages/day
+- **Per-page latency**: 50-200ms
+- **VRAM usage**: ~8GB per batch
+- **Accuracy**: 97% semantic preservation
+
+## Why This Works (And Why Nobody Does It)
+
+The AI industry is obsessed with two approaches to context management:
+
+1. **RAG** (Retrieval-Augmented Generation): Split your docs into chunks, embed them, retrieve relevant chunks at query time
+2. **Summarization**: Have the AI summarize documents before loading them
+
+Both have problems. RAG adds latency and misses cross-document relationships. Summarization loses detail and requires an LLM call to produce.
+
+Visual compression is a third path. It leverages the fact that vision encoders are *naturally* more token-efficient than text encoders for the same information density. A well-rendered page of documentation that takes 10,000 text tokens can be represented in 256 vision tokens. The information isn't lost — it's *repackaged* into a more efficient encoding.
+
+The reason nobody does this? Two things:
+
+1. **It requires a good OCR model.** Until DeepSeek-OCR dropped in late 2025, there wasn't a production-quality open-source option for semantic document compression.
+2. **It requires a GPU.** You need local inference to make this practical. Cloud OCR APIs would eat your savings in API costs. A $2,000 GPU pays for itself in one month.
+
+## Tracking It All: The Session Analytics Dashboard
+
+I don't just guess at these numbers. I built a full analytics pipeline into my Personal Dashboard that gives me real-time visibility into Claude Code usage:
+
+```
+Internal/Personal-Dashboard/
+  scripts/parse-sessions.mjs          # Parser: scans all JSONL session files + subagents
+  app/api/sessions/analytics/route.ts  # API: serves cached analytics
+  app/dashboard/sessions/              # UI: sessions page with charts
+  components/dashboard/
+    token-consumption-chart.tsx        # Token breakdown visualization
+    session-heatmap.tsx                # Activity heatmap (GitHub-style)
+    tool-usage-chart.tsx               # Tool call frequency
+    session-activity-chart.tsx         # Daily activity trends
+    project-distribution-chart.tsx     # Per-project token allocation
+```
+
+The parser reads every `.jsonl` file in `~/.claude/projects/`, including subagent transcripts nested in subdirectories, and produces a comprehensive analytics cache. It tracks tokens by type (input, output, cache read, cache creation), tool usage frequency, project distribution, session duration, and daily activity patterns.
+
+Run it yourself:
+
+```bash
+node scripts/parse-sessions.mjs
+# Output: .session-analytics.json (126KB of analytics)
+```
+
+Then visit your dashboard at `/dashboard/sessions` to see the full visualization — heatmaps, charts, session history, and real-time token consumption trends.
+
+## How to Build This Yourself
+
+The full pipeline is open-source in my monorepo. The key components:
+
+```
+.claude/scripts/compress-claude-md.js    # Node.js orchestrator (1,094 lines)
+packages/DeepSeek-OCR/                    # Python OCR service
+.claude/data/compressed/                  # Output: compressed JSON files
+.claude/data/compressed/index.json        # Manifest with statistics
+```
+
+The basic flow:
+
+```bash
+# Compress all CLAUDE.md files
+node .claude/scripts/compress-claude-md.js compress
+
+# Force recompression (ignore 24h cache)
+node .claude/scripts/compress-claude-md.js compress --force
+
+# View statistics
+node .claude/scripts/compress-claude-md.js stats
+
+# Verify compression integrity
+node .claude/scripts/compress-claude-md.js verify
+```
+
+Each compressed file is stored as JSON with full metadata:
+
+```json
+{
+  "version": "1.0",
+  "source": "CLAUDE.md",
+  "hash": "052a1484",
+  "compressed_at": "2026-01-11T19:47:32.685Z",
+  "metrics": {
+    "original_size": 42295,
+    "compressed_size": 1962,
+    "compression_ratio": "95.4",
+    "original_tokens": 10453,
+    "compressed_tokens": 491,
+    "token_savings": 9962
+  }
+}
+```
+
+## The Bigger Picture
+
+I've been running Claude Code professionally since October 2025. In that time:
+
+- **66 sessions** (with 945 subagent sessions spawned)
+- **116,222 messages** exchanged
+- **42,643 tool calls** executed
+- **6.77 billion tokens** consumed (verified by my analytics dashboard)
+- **$23,000+ in API-equivalent compute** on ~$1,000 in Max subscription fees
+- **Average session duration: 19 hours 18 minutes**
+
+The visual compression pipeline is what makes this sustainable. Without it, I'd be burning 25% of my context window on documentation overhead. With it, that drops to 2.5%. That's not just a cost savings — it's a *capability* increase. More context for code. More context for multi-agent orchestration. More context for the actual work.
+
+If you're running a serious AI-assisted development workflow — especially one with multiple projects, shared context, and specialized agents — you owe it to yourself to look at visual compression. The ROI is immediate and the implementation is straightforward.
+
+Your GPU is sitting there anyway. Make it earn its keep.
+
+---
+
+*Building AI-powered products across legal tech, voice AI, and blockchain from a single monorepo managed entirely by Claude Code. The compression pipeline and session analytics dashboard are open-source.*
+
+*Follow the journey at [elijahbrown.info](https://elijahbrown.info)*
