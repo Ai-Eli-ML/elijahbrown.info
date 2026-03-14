@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Elijah Brown | AI Solopreneur",
     description: "Building gods from silicon. Where consciousness meets code in the quiet darkness.",
-    creator: "@x_0___0_x",
+    creator: "@elijahbrown_ai",
     images: ["/og-image.png"],
   },
   robots: {
@@ -80,18 +80,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
     ],
     apple: [
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      {
-        rel: 'mask-icon',
-        url: '/safari-pinned-tab.svg',
-      },
     ],
   },
   manifest: '/site.webmanifest',

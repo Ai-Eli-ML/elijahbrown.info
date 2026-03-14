@@ -33,20 +33,8 @@ export default function WebVitals() {
           });
         }
 
-        // Example: Send to custom analytics endpoint
-        fetch('/api/analytics', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            metric: metric.name,
-            value: metric.value,
-            rating: metric.rating,
-            id: metric.id,
-            timestamp: Date.now(),
-          }),
-        }).catch((error) => {
-          console.error('[Web Vitals] Failed to send metric:', error);
-        });
+        // Send to Vercel Analytics (handled by @vercel/analytics)
+        // Custom endpoint disabled — Vercel Analytics captures Web Vitals automatically
       }
 
       // Visual feedback for poor performance in development

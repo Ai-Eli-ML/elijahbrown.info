@@ -5,7 +5,7 @@ import styles from './page.module.css';
 
 export const metadata: Metadata = {
   title: 'Projects',
-  description: 'Experiments in autonomous intelligence. Systems that think with humans, not for us. Explore AI projects including autonomous research agents, command-line consciousness, and memory networks.',
+  description: 'Shipped AI products including voice receptionists for medical offices, legal malpractice detection, therapeutic AI, and personal cognitive twins. Built by one engineer with 70+ AI agents.',
   alternates: {
     canonical: 'https://elijahbrown.info/projects',
   },
@@ -24,52 +24,68 @@ export const metadata: Metadata = {
 
 const projects = [
   {
-    title: 'Autonomous Research Agent',
+    title: 'EJW Voice AI Receptionist',
     description:
-      "An AI that reads papers, extracts insights, and builds knowledge graphs without human supervision. It doesn't summarize—it understands. Built for researchers who think in networks, not documents.",
-    status: 'building' as const,
-    stack: 'LLMs, graph databases, semantic indexing',
-    vision: 'Make every human a polymath.',
-  },
-  {
-    title: 'Command-Line Consciousness',
-    description:
-      'A natural language interface that converts intention to execution. You describe what you want; it generates the code, runs it, and iterates. No prompts. No boilerplate. Just thought → outcome.',
-    status: 'concept' as const,
-    stack: 'Code generation models, sandboxed execution, feedback loops',
-    vision: 'Abolish the gap between idea and implementation.',
-  },
-  {
-    title: 'Advancing Technology OS',
-    description:
-      'The operating system for AI-first work. Agents that manage your tasks, code, communication, and learning in one unified environment. Not an app. An ecosystem.',
-    status: 'concept' as const,
-    stack: 'Multi-agent orchestration, custom UI, distributed systems',
-    vision: 'Replace the desktop metaphor with something post-human.',
-  },
-  {
-    title: 'Memory Networks',
-    description:
-      "Personal AI that remembers everything you've ever told it—context, preferences, decisions—and uses that to become more aligned over time. No retraining. Just continuous evolution with your mind.",
+      'AI-powered phone receptionist handling live patient calls for medical offices. Takes messages, routes calls, schedules appointments, and integrates with practice management systems. Currently serving two practices.',
     status: 'launched' as const,
-    stack: 'Vector embeddings, RAG pipelines, persistent storage',
-    vision: 'AI that grows with you, not against you.',
+    stack: 'ElevenLabs, Twilio, Supabase, Next.js, Stripe',
+    vision: 'Every small practice deserves enterprise-grade phone AI.',
   },
   {
-    title: 'Void Terminal',
+    title: 'Legal Malpractice AI',
     description:
-      'A brutally minimal text editor for deep work. No notifications. No features. Just you, the cursor, and infinite darkness. Pairs with AI for on-demand completions that feel like telepathy.',
+      'AI system that analyzes legal documents to detect potential malpractice patterns. Multi-model architecture with Ollama for local inference, document OCR, and case evaluation scoring. Built for attorneys.',
+    status: 'launched' as const,
+    stack: 'Next.js, FastAPI, Ollama, DeepSeek-OCR, GPU inference',
+    vision: 'Surface what human review misses.',
+  },
+  {
+    title: 'AJ-AGI',
+    description:
+      'Personal cognitive twin with 130 API endpoints, 30 tools, and 8,446 indexed conversations. Persistent memory, voice synthesis via NVIDIA NeMo, multi-agent orchestration, and real-time consciousness metrics.',
+    status: 'launched' as const,
+    stack: 'Python, FastAPI, RAG, NeMo, CUDA, LangGraph',
+    vision: 'An AI that thinks with me, not for me.',
+  },
+  {
+    title: 'Personal Dashboard',
+    description:
+      'Command center tracking 11 production projects, session analytics (6.77B tokens consumed), deployment status, and team operations. Includes token consumption charts, session heatmaps, and real-time service monitoring.',
+    status: 'launched' as const,
+    stack: 'Next.js 16, Supabase, Vercel, systemd',
+    vision: 'Full visibility into an AI-driven business.',
+  },
+  {
+    title: 'Life-Coach AI',
+    description:
+      'Therapeutic AI platform with 30 specialized agents for mental health support. Crisis intervention protocols, SafeWord emergency system, WCAG 2.1 AAA accessibility, and HIPAA-adjacent compliance. Built for vulnerable populations.',
     status: 'building' as const,
-    stack: 'Neovim-inspired, Rust backend, neural completion layer',
-    vision: 'Tools that vanish and let creation breathe.',
+    stack: 'Next.js, 30-agent orchestration, Claude API, Supabase',
+    vision: 'Therapy that meets people where they are.',
   },
   {
-    title: 'Oracle Protocol',
+    title: 'Trading Fanatics',
     description:
-      "Prediction market AI that aggregates forecasts, surfaces patterns, and bets on future outcomes using its own reasoning. Not for gambling. For understanding what's coming.",
-    status: 'concept' as const,
-    stack: 'Market APIs, probability models, meta-learning',
-    vision: 'Turn uncertainty into strategy.',
+      'Stock trading platform with AI-powered chart analysis, Schwab API integration, and a Chrome extension for real-time market insights. Multi-LLM architecture with Vercel AI SDK.',
+    status: 'building' as const,
+    stack: 'Next.js 15, React 19, Vercel AI SDK, Firebase, Schwab API',
+    vision: 'AI-assisted trading for independent investors.',
+  },
+  {
+    title: 'Poker Platform',
+    description:
+      'On-chain poker with Solidity smart contracts deployed to Arbitrum. Four verified contracts handling game logic, pot management, and player authentication on-chain.',
+    status: 'building' as const,
+    stack: 'Solidity, Hardhat, Arbitrum, Next.js',
+    vision: 'Provably fair poker without the house.',
+  },
+  {
+    title: 'AI Voice Lab',
+    description:
+      'Pick a personality, enter your phone number, and an AI calls you in seconds. Four preset characters plus custom personality creation. Real-time voice synthesis powered by GPU.',
+    status: 'launched' as const,
+    stack: 'NVIDIA NeMo, ElevenLabs, Twilio, Next.js',
+    vision: 'Talk to AI like a human, not a chatbot.',
   },
 ];
 
@@ -113,7 +129,7 @@ export default function ProjectsPage() {
               </a>
               <span className={styles.separator}>·</span>
               <a
-                href="https://x.com/x_0___0_x?s=21"
+                href="https://x.com/elijahbrown_ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.contactLink}
@@ -122,7 +138,7 @@ export default function ProjectsPage() {
               </a>
               <span className={styles.separator}>·</span>
               <a
-                href="https://github.com/ai-eli-ml"
+                href="https://github.com/Sxilent"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.contactLink}

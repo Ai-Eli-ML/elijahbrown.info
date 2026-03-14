@@ -240,10 +240,10 @@ export default function ContactPage() {
                   </p>
                 </div>
                 <div className={styles.contactMethod}>
-                  <h3>Twitter</h3>
+                  <h3>Twitter/X</h3>
                   <p>
                     <a
-                      href="https://twitter.com/elijahbrown_ai"
+                      href="https://x.com/elijahbrown_ai"
                       target="_blank"
                       rel="noopener noreferrer"
                       className={styles.link}
