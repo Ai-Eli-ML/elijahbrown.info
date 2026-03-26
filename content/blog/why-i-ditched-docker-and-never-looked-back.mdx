@@ -1,0 +1,106 @@
+---
+title: "Why I Ditched Docker and Never Looked Back"
+date: "2026-03-26"
+description: "I ran my entire AI ecosystem in Docker containers for months. Traefik, Ollama, FastAPI backends, Next.js frontends, Redis, Postgres. Then I replaced all of it with systemd, Vercel, and Railway. Here's why that was the right call for building products that actually make money."
+tags: ["Infrastructure", "Docker", "Vercel", "Railway", "Production", "Startup"]
+---
+
+I used to run everything in Docker. A fat `docker-compose.yml` with seven services: Traefik as an API gateway, two FastAPI backends, a containerized Ollama instance for local LLM inference, two Next.js frontends, and Redis for caching. It looked impressive. It felt like real infrastructure.
+
+It was also a terrible way to build a business.
+
+## What My Docker Setup Actually Looked Like
+
+Here's the stack I was running on my local machine:
+
+| Service | Port | What It Did |
+|---------|------|-------------|
+| Traefik | 8000 | API gateway, routing all traffic |
+| Legal Malpractice Backend | 8001 | FastAPI analyzing medical documents |
+| AJ-AGI Backend | 8002 | My personal AI assistant's API |
+| Ollama | 11434 | GPU-accelerated LLM inference |
+| Legal Malpractice Frontend | 3001 | Next.js client for lawyers |
+| Personal Dashboard | 3000 | Internal analytics |
+| Redis | 6379 | Caching and rate limiting |
+
+Plus a separate `docker-compose.yml` for the Legal Malpractice app with its own PostgreSQL + pgvector database.
+
+All of this ran on my desktop. An AMD Ryzen 7 9700X with 96GB of RAM and an RTX 5090. More than enough horsepower. But horsepower was never the problem.
+
+## The Problem With Running Production on Your Desktop
+
+Here's the thing nobody tells you when you're containerizing everything: if your PC is the server, you are the uptime guarantee.
+
+My Legal Malpractice app analyzes medical documents for attorneys. These are people who bill $400 an hour. When they upload a case file at 2 AM because they have a filing deadline, they need the analysis back. They do not care that my PC went to sleep, that Windows pushed an update, or that my internet hiccuped because Comcast felt like it.
+
+Docker doesn't solve this. Docker makes it easy to package and run services. It does not make your bedroom into a data center.
+
+I spent more time babysitting containers than building features. Checking if Ollama's GPU passthrough broke after a driver update. Restarting Traefik when it lost track of container DNS. Rebuilding images when a pip dependency changed. Debugging Docker Desktop's WSL integration when it decided to eat 30GB of RAM for breakfast.
+
+Every hour I spent on infrastructure was an hour I didn't spend shipping.
+
+## What I Replaced It With
+
+The migration happened gradually, but the end state is clean:
+
+**Frontend** went to Vercel. Zero config deployment. Push to GitHub, get a production URL. Global CDN. Auto-scaling. My legal app runs at `mac.advancingtechnology.online` and I haven't thought about it since.
+
+**Backend API** went to Railway. My FastAPI server deploys from a Dockerfile (the same one Docker Compose was using), but Railway manages the hosting. Auto-restart on crash. Logs in a dashboard. No more SSHing into my own machine to check if uvicorn is still alive.
+
+**Database** went to Supabase Cloud. Managed Postgres with pgvector, automatic backups, Row Level Security, connection pooling. The local Postgres container was a liability. One bad `docker-compose down -v` and your data is gone.
+
+**Ollama** stayed local, but runs natively through systemd instead of a container. Same GPU access, less overhead. It starts on boot, restarts on crash, and I can check its status with `systemctl status ollama`. No Docker Desktop required.
+
+**Redis** got replaced by managed services where needed. For most things, Vercel's built-in caching and Supabase's infrastructure handle it.
+
+**Traefik** just went away. Vercel handles frontend routing. Railway handles backend routing. I don't need an API gateway sitting on my PC anymore.
+
+## The Numbers
+
+Here's what changed in practical terms:
+
+| Metric | Docker | Current Setup |
+|--------|--------|---------------|
+| Services on my PC | 7 containers | 1 (Ollama) |
+| Single point of failure | My desktop | None |
+| Deploy process | `docker-compose up` and pray | `git push` |
+| Time to recover from crash | 5-15 min manual restart | Automatic |
+| Monthly hosting cost | $0 (but my time) | ~$20-40 |
+| Uptime for clients | Whatever my PC managed | 99.9% |
+| Disk space for Docker | ~100GB (images + volumes) | 0 |
+
+That $20-40 a month buys me something Docker never could: the ability to close my laptop and know everything still works.
+
+## But What About Cost at Scale?
+
+I hear this argument a lot. "Docker is free, cloud hosting costs money, and at scale you'll pay thousands."
+
+Sure. If I hit the point where Railway and Vercel bills are a problem, that means I have paying customers. That is a good problem. I will happily pay $500 a month in hosting when the product is generating $25,000 in MRR.
+
+The startup trap is optimizing for scale you don't have yet. You're not Netflix. You don't need Kubernetes. You need users, and users need your product to be online when they try to use it.
+
+## When Docker Still Makes Sense
+
+I'm not anti-Docker. It's a great tool for specific situations:
+
+**CI/CD pipelines.** Running tests in isolated environments, building reproducible artifacts. Docker is perfect for this.
+
+**Team onboarding.** If you have 10 developers who all need the same local environment, a docker-compose file saves hours of setup.
+
+**Self-hosted infrastructure.** If you're running Gitea, Minio, or other internal tools on a VPS, Docker Compose is the right call.
+
+**Air-gapped or compliance environments.** If your data absolutely cannot leave a specific machine, you containerize and run locally. No cloud involved.
+
+But for shipping a SaaS product as a solo founder or small team? You're spending time on plumbing when you should be building pipes.
+
+## The Lesson
+
+Infrastructure should be invisible. The moment you're thinking about Docker networking, GPU passthrough, container health checks, and volume mounts instead of thinking about your product, you've lost the plot.
+
+My Legal Malpractice app is at 95% completion. Stripe billing is integrated. The hybrid search engine hits 100% accuracy on test scenarios. Attorneys can upload documents and get AI-powered analysis in minutes.
+
+None of that happened because I had a beautiful Docker Compose file. It happened because I stopped maintaining one.
+
+Ship the product. Manage the infrastructure later, or better yet, let someone else manage it. That's what platforms like Vercel and Railway exist for.
+
+Your PC is for building. Not for hosting.
